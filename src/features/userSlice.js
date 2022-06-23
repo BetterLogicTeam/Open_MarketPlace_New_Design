@@ -5,6 +5,7 @@ export const userSlice = createSlice({
   initialState: {
     useraddress: null,
     value: [],
+    bidAmount:true
 
   },
   reducers: {
@@ -15,11 +16,19 @@ export const userSlice = createSlice({
     incrementByAmount: (state, action) => {
       state.value = action.payload
     },
+    biding: (state, action) => {
+      console.log("Biding_here",action.payload);
+      state.bidAmount = action.payload
+
+    },
   },
 });
 
+
+
 export const { setUser } = userSlice.actions;
 export const selectUserAddress = (state) => state.user.useraddress;
-export const {incrementByAmount } = userSlice.actions
+export const {incrementByAmount,biding } = userSlice.actions
+
 
 export default userSlice.reducer;

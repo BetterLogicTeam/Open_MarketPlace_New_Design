@@ -119,8 +119,8 @@
     --secondary-bg-color-2: #111111;
     --secondary-bg-color-3: #191919;
 
-    --card-bg-color: #16151A;
-    --footer-bg-color: #121117;
+    --card-bg-color: #343444;
+    --footer-bg-color: #343444;
 }
 
 /* #endregion Root */
@@ -151,11 +151,11 @@ html {
 body {
     font-family: var(--secondary-font);
     color: var(--primary-p-color);
-    background-color: var(--primary-bg-color);
+    // background-color: var(--primary-bg-color);
 }
 
 body.odd {
-    background-color: var(--secondary-bg-color);
+    // background-color: var(--secondary-bg-color);
 }
 
 body:not(.page-template) .odd:not(.comment) {

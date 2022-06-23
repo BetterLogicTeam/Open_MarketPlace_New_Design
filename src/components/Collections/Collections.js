@@ -270,7 +270,7 @@ export default function Collections() {
                   <div class="meta-info">
                     <div class="author">
                       <div class="avatar mt-n5">
-                        <img src={women_drink} alt="Image" style={{ width: "50px", height: "50px" }} />
+                        <img src={item.url} alt="Image" style={{ width: "50px", height: "50px" }} />
                       </div>
                       <div class="info mt-n4 ">
                         <span>Owned By</span>

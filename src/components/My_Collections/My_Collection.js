@@ -114,7 +114,8 @@ function My_Collection() {
       } else if (jsonUsrl.endsWith(".jpg")) {
         jsonUsrl= jsonUsrl;
         console.log("jsonUsrl",jsonUsrl);
-      }else{
+      }
+      else{
         jsonUsrl =women_drink
       }
 

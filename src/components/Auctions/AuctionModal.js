@@ -22,11 +22,15 @@ import { BiTransfer } from 'react-icons/bi'
 import women_drink from '../././../Assets/women_drink.jpg'
 import Loading from '../Loading/Loading'
 
-
+import { useSelector, useDispatch } from 'react-redux'
+import { biding } from '../../features/userSlice'
 
 
 
 export default function AuctionModal() {
+  const count = useSelector((state) => state.user.bidAmount)
+  console.log("what is bidding", count)
+  const dispatch = useDispatch()
   const { id } = useParams();
 
   const [tokenId, settokenId] = useState()
@@ -72,13 +76,13 @@ export default function AuctionModal() {
       `https://whenftapi.herokuapp.com/OnAuction_marketplace_history?id=100`
     );
 
-    let response_here=res.data.data[id]
-    response_here=response_here.url
+    let response_here = res.data.data[id]
+    response_here = response_here.url
     setResonse(response_here)
 
- let nftname=res.data.data[id]
- nftname=nftname.name
- setnftname_here(nftname)
+    let nftname = res.data.data[id]
+    nftname = nftname.name
+    setnftname_here(nftname)
 
     let sender_address = res.data.data[id]
     sender_address = sender_address.useraddress
@@ -87,7 +91,7 @@ export default function AuctionModal() {
     tokenId_here = tokenId_here.tokenId;
     setToken_Id(tokenId_here)
 
-    console.log("tokenId_herehhhhhhhhhhhhh",res);
+    console.log("tokenId_herehhhhhhhhhhhhh", res);
 
 
     alldata_here = res.data.data[id]
@@ -117,6 +121,7 @@ export default function AuctionModal() {
 
 
       setboluher(false)
+      dispatch(biding(false))
     } else {
       let days = parseInt(TimeFinal / 86400)
 
@@ -323,7 +328,7 @@ export default function AuctionModal() {
                           <div className='timer_here'>
                             <p > Highest Bid:{hightbid}</p>
                             {
-                              boluher ? (<>
+                              count ? (<>
                                 <p className='mt-n1'>CLAIM IN {Days_here} <small>d </small>{Hours_here} <small>h</small> {Munits_here} <small>m</small> {Seconds} <small>s</small></p>
 
                               </>) :
@@ -343,7 +348,7 @@ export default function AuctionModal() {
                       </div>
 
                       {
-                        boluher ? (
+                        count ? (
 
                           <>
                             <input
