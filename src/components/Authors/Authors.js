@@ -26,7 +26,7 @@ export default function Authors() {
   let [myData, setMydata] = useState(null);
   let [myUrl, setMyUrl] = useState()
 
-const create=ipfsHttpClient("https://ipfs.infura.io:5001/api/v0")
+// const create=ipfsHttpClient("https://ipfs.infura.io:5001/api/v0")
 
  
   
