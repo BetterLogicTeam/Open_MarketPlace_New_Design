@@ -23,6 +23,7 @@
     "firebase": "^9.6.4",
     "graphql": "^16.2.0",
     "graphql-tag": "^2.12.6",
+    "ipfs-core": "^0.15.4",
     "ipfs-http-client": "^33.0.1",
     "jquery": "^3.6.0",
     "moralis": "^1.8.0",

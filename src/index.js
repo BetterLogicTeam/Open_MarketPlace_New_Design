@@ -17,7 +17,9 @@ ReactDOM.render(
     <Provider store={store}>
       {/* <PersistGate loading={null} persistor={persistor}> */}
         <MoralisProvider initializeOnMount={true}
-          serverUrl="https://liv6ukm6ikwr.usemoralis.com:2053/server" appId="xWjNPcmYmgTF4bwFY6qhn8jMekYtoJIIs1T3aATG">
+          serverUrl="https://liv6ukm6ikwr.usemoralis.com:2053/server" appId="xWjNPcmYmgTF4bwFY6qhn8jMekYtoJIIs1T3aATG"
+          masterKey="5whRERIQKABh1NclnW3trKSLUEXwp3V9O06rapFI"
+          >
           <App />
         </MoralisProvider>
 

@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { ethers } from 'ethers'
-
-
+import { ethers } from 'ethers';
 import './Author_style.css'
 import { FaUserFriends, FaShoppingCart, FaUsers } from 'react-icons/fa'
 import { ImHistory } from 'react-icons/im'
 import { BsTagsFill } from 'react-icons/bs'
 import { Moralis } from 'moralis'
 import { create } from 'ipfs-http-client';
-// import Web3Modal from 'web3modal'
-
-
-const client = create('https://ipfs.infura.io:5000/api/v0')
+// import Web3Modal from 'web3modal' 
+// import {create, IPFS} from 'ipfs-core'
+import { useMoralis, useMoralisFile } from 'react-moralis'
+// const client = create({url:'https://ipfs.infura.io:5001/api/v0'})
 
 export default function Authors() {
-
-
 
   const [fileUrl, setFileUrl] = useState(null)
   const [formInput, updateFormInput] = useState({ price: '', name: '', description: '' })
@@ -26,13 +22,71 @@ export default function Authors() {
   let [image, setImage] = useState("");
   let [myData, setMydata] = useState(null);
   let [myUrl, setMyUrl] = useState()
+  const {saveFile, moralisFile} = useMoralisFile()
+  const { authenticate, isAuthenticated, isAuthenticating, user, account, logout } = useMoralis();
+  
+  const login = async () => {
+    if (!isAuthenticated) {
 
+      await authenticate({signingMessage: "Log in using Moralis" })
+        .then(function (user) {
+          console.log("logged in user:", user);
+          // const file = e.target.files[0]
+   
+          // const fileIpfs =new Moralis.File(file.name, file)
+          //  await fileIpfs.saveIPFS(null, {useMasterKey:true})
+          //  console.log("files", fileIpfs);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  }
+  const logOu = async () => {
+    await logout();
+    console.log("logged out");
+  }
+  async function uploadFile(e) {
+  // const client = await create(new URL('http://127.0.0.1:5002'))
+  // const fileIpfs =new Moralis.File(file.name, file)
+  //          await fileIpfs.saveIPFS(null, {useMasterKey:true})
+  //          console.log("files", fileIpfs);
+  try {
+    logOu();
+    
+    if (!isAuthenticated) {
+
+      await authenticate({signingMessage: "Log in using Moralis" }
+        ).then(async function (user) {
+          console.log("logged in user:", user);
+          const file = e.target.files[0]
+   const fileIpfs =new Moralis.File(file.name, file)
+           await fileIpfs.saveIPFS(null, {useMasterKey:true})
+           console.log("files", fileIpfs);
+          
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }else{
+      logOu();
+      const file = e.target.files[0]
+   const fileIpfs =new Moralis.File(file.name, file)
+           await fileIpfs.saveIPFS(null, {useMasterKey:true})
+           console.log("files", fileIpfs);
+    }
+    } catch (error) {
+      console.log('Error uploading file: ', error)
+    }  
+  }
 
   const IpfsStorage = async (file) => {
     // const [fileUrl, updateFileUrl] = useState(``)
     // const file = e.target.files[0]
+  const client = create(new URL('http://127.0.0.1:5002'))
+
     try {
-      const added = await client.add(file)
+      const added = await client.add(fileUrl)
       const url = `https://ipfs.infura.io/ipfs/${added.path}`
       //   updateFileUrl(url)
       return url;
@@ -46,6 +100,8 @@ export default function Authors() {
    const IpfsStorageMetadata = async (file) => {
     // const [fileUrl, updateFileUrl] = useState(``)
     // const file = e.target.files[0]
+  const client = create(new URL('http://127.0.0.1:5002'))
+
     try {
       // const added = await client.add(file)
       // const url = `https://ipfs.infura.io/ipfs/${added.path}`
@@ -125,7 +181,7 @@ export default function Authors() {
                   <label class="uploadFile">
                     <span class="filename">PNG, JPG, GIF, WEBP or MP4. Max 200mb.</span>
                     <input type="file" class="inputfile form-control" name="fileInput" id="fileInput" 
-                    // onChange={()=>onChange()}
+                    onChange={uploadFile}
                      />
                   </label>
                 </form>
@@ -159,7 +215,7 @@ export default function Authors() {
                           )
                         }
 
-                        <button  className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
+                        <button  className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg" onClick={()=>IpfsStorage()}>
                           Create NFT
                         </button>
 
