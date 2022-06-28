@@ -80,9 +80,9 @@ export default function Auctionsbiding() {
     let res = polygonNFTs.result[id];
     //  res = res[id];
     const web3 = window.web3;
-  
 
- 
+
+
     let name = res.name;
     let owner_of = res.owner_of;
     token_address = res.token_address;
@@ -93,23 +93,30 @@ export default function Auctionsbiding() {
     setNftName(name)
     settoken_id(token_id);
     setownadd(token_address);
-   
+
     let jsonUsrl = res.token_uri;
-    console.log("res",jsonUsrl);
+    console.log("res", jsonUsrl);
 
 
-    if(jsonUsrl==null){
-      jsonUsrl =women_drink
+    if (jsonUsrl == null) {
+      jsonUsrl = women_drink
       console.log("Image_is_null");
     }
     else if (jsonUsrl.endsWith(".json")) {
-      jsonUsrl= jsonUsrl.replace("json","png");
-      console.log("jsonUsrl",jsonUsrl);
+      jsonUsrl = jsonUsrl.replace("json", "png");
+      console.log("jsonUsrl", jsonUsrl);
     } else if (jsonUsrl.endsWith(".jpg")) {
-      jsonUsrl= jsonUsrl;
-      console.log("jsonUsrl",jsonUsrl);
-    }else{
-      jsonUsrl =women_drink
+      jsonUsrl = jsonUsrl;
+      console.log("jsonUsrl", jsonUsrl);
+    }if(jsonUsrl.startsWith("https://ipfs.moralis.io:2053/ipfs/")){
+
+
+       
+      jsonUsrl=jsonUsrl
+    
+
+    } else {
+      jsonUsrl = women_drink
     }
 
     setimgul(jsonUsrl)

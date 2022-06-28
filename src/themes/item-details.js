@@ -86,6 +86,13 @@ const ItemDetails = () => {
     } else if (jsonUsrl.endsWith(".jpg")) {
       jsonUsrl= jsonUsrl;
       console.log("jsonUsrl",jsonUsrl);
+    }if(jsonUsrl.startsWith("https://ipfs.moralis.io:2053/ipfs/")){
+
+
+       
+      jsonUsrl=jsonUsrl
+    
+
     }else{
       jsonUsrl =women_drink
     }

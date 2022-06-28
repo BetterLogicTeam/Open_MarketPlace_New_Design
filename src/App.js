@@ -3,7 +3,7 @@ import ApolloClient from "apollo-boost";
 // importing MyRouts where we located all of our theme
 import MyRouts from "./routers/routes";
 import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
 import Test from "./Test";
 import './App.css'
 

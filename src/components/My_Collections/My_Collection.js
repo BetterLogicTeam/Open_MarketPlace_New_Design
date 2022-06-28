@@ -17,7 +17,7 @@ import women_drink from '../../Assets/women_drink.jpg'
 // import { CONTRACT_ABI, CONTRACT_ADDRESS } from '../../config'
 
 function My_Collection() {
-  let [btnTxt, setBtTxt] = useState("Connect");
+  let [btnTxt, setBtTxt] = useState();
   let [imageArray, setImageArray] = useState([]);
   let [initialLimit, setInitialLimit] = useState(0);
   let [finalLimit, setFinalLimit] = useState(6);
@@ -38,13 +38,13 @@ function My_Collection() {
     let acc = await loadWeb3();
     console.log("ACC=", acc);
     if (acc == "No Wallet") {
-      setBtTxt("No Wallet");
+      // setBtTxt("No Wallet");
     } else if (acc == "Wrong Network") {
-      setBtTxt("Wrong Network");
+      // setBtTxt("Wrong Network");
     } else {
       let myAcc =
         acc?.substring(0, 4) + "..." + acc?.substring(acc?.length - 4);
-      setBtTxt(myAcc);
+      // setBtTxt(myAcc);
     }
   };
 
@@ -68,7 +68,7 @@ function My_Collection() {
     const polygonNFTs = await Web3Api.account.getNFTs(options);
 
     let res = polygonNFTs.result;
-    console.log("length", res);
+    // console.log("length", res);
     let loopLength = res.length;
     // console.log("Bahir", loopLength);
     // for(let j=0;j<loopLength;j++){
@@ -83,7 +83,7 @@ function My_Collection() {
     // }
     
     for (let i = 0; i < loopLength; i++) {
-      console.log("count", i);
+      // console.log("count", i);
       // console.log("length", res[i]);
       // console.log("Images , ", res[i].token_uri);
       let walletOfOwner = await nftContractOf.methods.walletOfOwner(acc).call();
@@ -101,19 +101,27 @@ function My_Collection() {
 
       
       let jsonUsrl = res[i].token_uri;
-      console.log("res",jsonUsrl);
+      // console.log("res",jsonUsrl);
 
 
       if(jsonUsrl==null){
         jsonUsrl =women_drink
-        console.log("Image_is_null");
+        // console.log("Image_is_null");
       }
       else if (jsonUsrl.endsWith(".json")) {
         jsonUsrl= jsonUsrl.replace("json","png");
-        console.log("jsonUsrl",jsonUsrl);
+        // console.log("jsonUsrl",jsonUsrl);
       } else if (jsonUsrl.endsWith(".jpg")) {
         jsonUsrl= jsonUsrl;
-        console.log("jsonUsrl",jsonUsrl);
+        // console.log("jsonUsrl",jsonUsrl);
+      }
+      else if(jsonUsrl.startsWith("https://ipfs.moralis.io:2053/ipfs/")){
+
+
+       
+        jsonUsrl=jsonUsrl
+      
+
       }
       else{
         jsonUsrl =women_drink
@@ -160,10 +168,10 @@ function My_Collection() {
       if (pageNumber < totalPages) {
         setPageNumber(pageNumber + 1);
       }
-      console.log("Loading More Up");
+      // console.log("Loading More Up");
       setFinalLimit(mywalletLength);
     } else {
-      console.log("Loading More");
+      // console.log("Loading More");
       if (pageNumber < totalPages) {
         setPageNumber(pageNumber + 1);
       }
@@ -245,7 +253,7 @@ function My_Collection() {
 
       let nftContractOf = new web3.eth.Contract(nftMarketContractAddress_Abi, nftMarketContractAddress);
       let Widthdraw = await nftContractOf.methods.getDueAmount(acc).call();
-      console.log("Widthdraw", Widthdraw);
+      // console.log("Widthdraw", Widthdraw);
       if (Widthdraw == 0) {
         setbtnDisable(true)
       } else {
@@ -374,8 +382,8 @@ function My_Collection() {
                                 </div>
                               </div>
                               <div class="price">
-                                <span>Price</span>
-                                <h5>{items.amount} BNB</h5>
+                                <span>Token Id</span>
+                                <p className="mt-n1">{items.token_id} </p>
                               </div>
                             </div>
 

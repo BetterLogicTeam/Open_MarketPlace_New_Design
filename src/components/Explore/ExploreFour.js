@@ -89,10 +89,10 @@ export default function ExploreFour() {
         <div class="container">
           <div class="row">
 
-            {
-              apiData?.map((items, index) => {
-                return (
-                  <>
+              {
+                apiData?.map((items, index) => {
+                  return (
+                    <>
                     <div class="fl-item col-xl-4 col-lg-4 col-md-6 col-sm-6" style={{ display: "block", cursor: "pointer" }}>
                       <div class="sc-card-product" onClick={() => myHistory.push("/purchase/" + index) }>
                         <div class="card-media">

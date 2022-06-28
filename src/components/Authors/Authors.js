@@ -10,97 +10,110 @@ import { create } from 'ipfs-http-client';
 // import Web3Modal from 'web3modal' 
 // import {create, IPFS} from 'ipfs-core'
 import { useMoralis, useMoralisFile } from 'react-moralis'
-// const client = create({url:'https://ipfs.infura.io:5001/api/v0'})
+import { toast } from "react-toastify";
+import { CreateNFT, CreateNFT_ABI } from '../Utils/Contract'
+import { loadWeb3 } from "../Api/api";
+import women_drink from '../../Assets/women_drink.jpg'
+
+
+
 
 export default function Authors() {
 
   const [fileUrl, setFileUrl] = useState(null)
-  const [formInput, updateFormInput] = useState({ price: '', name: '', description: '' })
+  const [formInput, updateFormInput] = useState({ price: '0', name: 'NFT Name', description: '' })
+  const [nftImage, setNftImage] = useState()
   let [getInpiut, setGetInput] = useState({ first: "", second: "", third: "", image: "" })
   let [name, setName] = useState("");
   let [description, setDescription] = useState("");
   let [image, setImage] = useState("");
   let [myData, setMydata] = useState(null);
-  let [myUrl, setMyUrl] = useState()
-  const {saveFile, moralisFile} = useMoralisFile()
-  const { authenticate, isAuthenticated, isAuthenticating, user, account, logout } = useMoralis();
-  
-  const login = async () => {
-    if (!isAuthenticated) {
+  let [addressacc, setaddressacc] = useState();
 
-      await authenticate({signingMessage: "Log in using Moralis" })
-        .then(function (user) {
-          console.log("logged in user:", user);
-          // const file = e.target.files[0]
-   
-          // const fileIpfs =new Moralis.File(file.name, file)
-          //  await fileIpfs.saveIPFS(null, {useMasterKey:true})
-          //  console.log("files", fileIpfs);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+  let [myUrl, setMyUrl] = useState(women_drink)
+  const { saveFile, moralisFile } = useMoralisFile()
+  const { authenticate, isAuthenticated, isAuthenticating, user, account, logout, initialize } = useMoralis();
+
+
+  async function uploadFile(e) {
+    try {
+
+
+      //     await authenticate({signingMessage: "Log in using Moralis" }
+      //       ).then(async function (user) {
+      //         console.log("logged in user:", user);
+      //         const file = e.target.files[0]
+      //  const fileIpfs =new Moralis.File(file.name, file)
+      //          await fileIpfs.saveIPFS(null, {useMasterKey:true})
+      //          console.log("files", fileIpfs);
+      //          const fileIpf =new Moralis.File(file.name, file)
+      //          await fileIpf.saveIPFS(null, {useMasterKey:true})
+      //          console.log("files", fileIpf);
+
+      //       })
+      //       .catch(function (error) {
+      //         console.log(error);
+      //       });
+
+    } catch (error) {
+      console.log('Error uploading file: ', error)
     }
   }
-  const logOu = async () => {
-    await logout();
-    console.log("logged out");
-  }
-  async function uploadFile(e) {
-  // const client = await create(new URL('http://127.0.0.1:5002'))
-  // const fileIpfs =new Moralis.File(file.name, file)
-  //          await fileIpfs.saveIPFS(null, {useMasterKey:true})
-  //          console.log("files", fileIpfs);
-  try {
-    logOu();
-    
-    if (!isAuthenticated) {
 
-      await authenticate({signingMessage: "Log in using Moralis" }
+  const IpfsStorage = async (e) => {
+    e.preventDefault()
+    console.log("nftImage", nftImage.name)
+    console.log("formInput", formInput);
+
+    if (nftImage == undefined) {
+      toast.error("Please Upload Image")
+    } else {
+      if (formInput.name == '' || formInput.price == '' || formInput.description == '') {
+        toast.error("Please Enter Data In Input Field")
+
+      } else {
+        await authenticate({ signingMessage: "Log in using Moralis" }
         ).then(async function (user) {
           console.log("logged in user:", user);
-          const file = e.target.files[0]
-   const fileIpfs =new Moralis.File(file.name, file)
-           await fileIpfs.saveIPFS(null, {useMasterKey:true})
-           console.log("files", fileIpfs);
-          
+          const fileIpfs = new Moralis.File(formInput.name, nftImage)
+          await fileIpfs.saveIPFS(null, { useMasterKey: true })
+          console.log("Iamge", fileIpfs._ipfs);
+          let  urlimage=fileIpfs._ipfs
+          setMyUrl(fileIpfs._ipfs)
+          let metaData = {
+            image: fileIpfs._ipfs,
+            description: formInput.description,
+            title: formInput.name,
+            name: formInput.price
+          }
+          const fileIpf = new Moralis.File("metadata.json", {
+            base64: btoa(JSON.stringify(metaData))
+          })
+          await fileIpf.saveIPFS(null, { useMasterKey: true })
+          console.log("files", fileIpf._ipfs);
+        
+          setGetInput(fileIpf._ipfs)
+          CreateNftUR(urlimage)
+
         })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }else{
-      logOu();
-      const file = e.target.files[0]
-   const fileIpfs =new Moralis.File(file.name, file)
-           await fileIpfs.saveIPFS(null, {useMasterKey:true})
-           console.log("files", fileIpfs);
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     }
-    } catch (error) {
-      console.log('Error uploading file: ', error)
-    }  
-  }
 
-  const IpfsStorage = async (file) => {
-    // const [fileUrl, updateFileUrl] = useState(``)
-    // const file = e.target.files[0]
-  const client = create(new URL('http://127.0.0.1:5002'))
 
-    try {
-      const added = await client.add(fileUrl)
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`
-      //   updateFileUrl(url)
-      return url;
-    } catch (error) {
-      // return false;
-      console.log('Error uploading file: ', error)
-    }
+    let res = await axios.get("https://ipfs.moralis.io:2053/ipfs/QmdxwzpRRkfJfwLdqxbm2YsgaMXCopSJhJURLYuYw13S2h");
+    console.log("res", res.data);
+
+
   }
 
 
-   const IpfsStorageMetadata = async (file) => {
+  const IpfsStorageMetadata = async (file) => {
     // const [fileUrl, updateFileUrl] = useState(``)
     // const file = e.target.files[0]
-  const client = create(new URL('http://127.0.0.1:5002'))
+    const client = create(new URL('http://127.0.0.1:5002'))
 
     try {
       // const added = await client.add(file)
@@ -118,6 +131,40 @@ export default function Authors() {
       console.log('Error uploading file: ', error)
     }
   }
+
+
+  const CreateNftUR = async(url) => {
+    let acc = await loadWeb3();
+    const web3 = window.web3;
+    console.log("myUrl",url);
+    try {
+      let nftContractOf = new web3.eth.Contract(CreateNFT_ABI, CreateNFT);
+      await nftContractOf.methods.createToken(url).send({
+        from: acc,
+
+      });
+
+
+    } catch (e) {
+      console.log("Error While Call Create Nft Function", e);
+    }
+  }
+
+
+  const callfunctionhere=async()=>{
+   let acc=await loadWeb3()
+    acc = acc.substring(0,4)+'...'+acc.substring(acc.length-4)
+   setaddressacc(acc)
+
+  }
+
+  useEffect(() => {
+
+    callfunctionhere()
+    
+  }, [])
+  
+
 
   return (
     <>
@@ -142,95 +189,89 @@ export default function Authors() {
               <h4 class="title-create-item">Preview item</h4>
               <div class="sc-card-product">
                 <div class="card-media">
-                  <a ><img src="images/box-item/image-box-6.jpg" alt="Image" /></a>
+                  <a ><img src={myUrl} alt="Image" /></a>
                   {/* <button class="wishlist-button heart"><span class="number-like"> 100</span></button> */}
-                  <div class="featured-countdown">
+                  {/* <div class="featured-countdown">
                     <span class="slogan"></span>
                     <span class="js-countdown text-white" data-timer="716400" data-labels=" :  ,  : , : , "><div aria-hidden="true" class="countdown__timer"><span class="countdown__item"><span class="countdown__value countdown__value--0 js-countdown__value--0">8</span><span class="countdown__label">:</span></span><span class="countdown__item"><span class="countdown__value countdown__value--1 js-countdown__value--1">05</span><span class="countdown__label">:</span></span><span class="countdown__item"><span class="countdown__value countdown__value--2 js-countdown__value--2">52</span><span class="countdown__label">:</span></span><span class="countdown__item"><span class="countdown__value countdown__value--3 js-countdown__value--3">38</span><span class="countdown__label"></span></span></div></span>
-                  </div>
+                  </div> */}
                 </div>
                 <div class="card-title">
-                  <h5><a >"Cyber Doberman #766”</a></h5>
+                  <h5><a >{formInput.name}</a></h5>
                   <div class="tags">bsc</div>
                 </div>
                 <div class="meta-info mt-n4">
                   <div class="author">
                     <div class="avatar mt-n4">
-                      <img src="images/avatar/avt-9.jpg" alt="Image" />
+                      <img src={myUrl} alt="Image" style={{ width: "350px", height: "300px" }} />
                     </div>
                     <div class="info">
                       <span>Owned By</span>
-                      <h6 className="mt-1"> <a >Freddie Carpenter</a></h6>
+                      <h6 className="mt-1"> <a >{addressacc}</a></h6>
                     </div>
                   </div>
                   <div class="price">
-                    <span>Current Bid</span>
-                    <h5> 4.89 ETH</h5>
+                    <span>Current Price</span>
+                    <h5> {formInput.price} BNB</h5>
                   </div>
                 </div>
-                <div class="card-bottom">
+                {/* <div class="card-bottom">
                   <a href="#" data-toggle="modal" data-target="#popup_bid" class="sc-button style bag fl-button pri-3"><FaShoppingCart />  <span>Place Bid</span></a>
                   <a class="view-history reload text-white"> <ImHistory /> View History</a>
-                </div>
+                </div> */}
               </div>
             </div>
             <div class="col-xl-8 col-lg-6 col-md-12 col-12">
               <div class="form-create-item">
-                <form action="#">
-                  <h4 class="title-create-item">Upload file</h4>
-                  <label class="uploadFile">
-                    <span class="filename">PNG, JPG, GIF, WEBP or MP4. Max 200mb.</span>
-                    <input type="file" class="inputfile form-control" name="fileInput" id="fileInput" 
-                    onChange={uploadFile}
-                     />
-                  </label>
-                </form>
+                {/* <form action="#"> */}
+                <h4 class="title-create-item">Upload file</h4>
+                <label class="uploadFile">
+                  <span class="filename">PNG, JPG, GIF, WEBP or MP4. Max 200mb.</span>
+                  <input type="file" class="inputfile form-control" name="fileInput" id="fileInput"
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setNftImage(e.target.files[0])
+
+                    }}
+                  />
+                </label>
+                {/* </form> */}
                 <div class="flat-tabs tab-create-item">
-                  <h4 class="title-create-item">Select method</h4>
+                  {/* <h4 class="title-create-item">Select method</h4>
                   <ul class="menu-tab tabs">
                     <li class="tablinks active"><span class="icon-fl-tag"><BsTagsFill /></span> Fixed Price</li>
                     <li class="tablinks"><span class="icon-fl-clock"><ImHistory /></span> Time Auctions</li>
                     <li class="tablinks"><span class="icon-fl-icon-22"><FaUsers /></span> Open For Bids</li>
-                  </ul>
+                  </ul> */}
                   <div class="content-tab">
                     <div class="content-inner" >
                       <form action="#">
                         <h4 class="title-create-item">Price</h4>
-                        <input type="text" placeholder="Enter price for one item (ETH)" 
-                        onChange={e => updateFormInput({ ...formInput, price: e.target.value })}
+                        <input type="text" placeholder="Enter price for one item (ETH)"
+                          onChange={e => updateFormInput({ ...formInput, price: e.target.value })}
                         />
 
                         <h4 class="title-create-item">Title</h4>
                         <input type="text" placeholder="Item Name" name="metadataName" id="metadataName"
-                         onChange={e => updateFormInput({ ...formInput, name: e.target.value })}
-                          />
+                          onChange={e => updateFormInput({ ...formInput, name: e.target.value })}
+                        />
 
                         <h4 class="title-create-item">Description</h4>
                         <textarea placeholder="e.g. “This is very limited item”" name="metadataDescription" id="metadataDescription"
-                         onChange={e => updateFormInput({ ...formInput, description: e.target.value })}
-                         ></textarea>
+                          onChange={e => updateFormInput({ ...formInput, description: e.target.value })}
+                        ></textarea>
                         {
                           fileUrl && (
                             <img className="rounded mt-4" width="350" src={fileUrl} alt='' />
                           )
                         }
 
-                        <button  className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg" onClick={()=>IpfsStorage()}>
+                        <button className="mt-3" onClick={IpfsStorage}>
                           Create NFT
                         </button>
 
-                        <div className='mt-5'>
-                          <h3 className='mt-5'>
-                            {name}
-                          </h3>
-                          <h3 className='mt-5'>
-                            {description}
-                          </h3>
 
-                          <img className="rounded mt-4" width="350" src={image} alt='' />
-
-                        </div>
-                        <div class="row-form style-3">
+                        {/* <div class="row-form style-3">
                           <div class="inner-row-form">
                             <h4 class="title-create-item">Royalties</h4>
                             <input type="text" placeholder="5%" />
@@ -255,7 +296,7 @@ export default function Authors() {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                       </form>
                     </div>
                     <div class="content-inner" style={{ display: "none" }}>
