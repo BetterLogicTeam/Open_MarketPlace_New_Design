@@ -265,7 +265,7 @@ const Header = (props) => {
                 Auctions
               </a>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <a
                 style={{
                   fontSize: "small",
@@ -273,13 +273,11 @@ const Header = (props) => {
                 }}
                 className='nav-link'
                 href='/activity'
-              // onClick={() => {
-              //   history.push("/activity");
-              // }}
+              
               >
                 Activity
               </a>
-            </li>
+            </li> */}
             <li className="nav-item">
               <a
                 style={{

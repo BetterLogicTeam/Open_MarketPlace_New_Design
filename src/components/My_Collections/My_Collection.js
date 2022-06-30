@@ -68,7 +68,7 @@ function My_Collection() {
     const polygonNFTs = await Web3Api.account.getNFTs(options);
 
     let res = polygonNFTs.result;
-    // console.log("length", res);
+    console.log("length", res);
     let loopLength = res.length;
     // console.log("Bahir", loopLength);
     // for(let j=0;j<loopLength;j++){
@@ -354,7 +354,7 @@ function My_Collection() {
                           <div class="sc-card-product" onClick={() => myHistory.push("/details/" + myvar)}>
                             <div class="card-media">
                               <a ><img src={items.jsonUsrl} alt="Image" style={{ width: "350px", height: "300px" }} /></a>
-                              <button class="wishlist-button heart"><span class="number-like"> 100</span></button>
+                              {/* <button class="wishlist-button heart"><span class="number-like"> 100</span></button> */}
                             </div>
                             {/* <div
                               style={{ fontSize: "small" }}

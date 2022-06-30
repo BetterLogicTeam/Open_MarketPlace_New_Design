@@ -50,10 +50,10 @@ export default function Collections() {
             <div class="heading-live-auctions mg-bt-21">
               <h2 class="tf-title pad-l-7">
                 Today's Picks</h2>
-              <a href="explore-3.html" class="exp style2 exp_here">EXPLORE MORE</a>
+              <a href="/explore-3" class="exp style2 exp_here">EXPLORE MORE</a>
             </div>
           </div>
-          <div class="col-md-12">
+          {/* <div class="col-md-12">
             <div class="tf-soft">
               <div class="soft-left inner_div_here">
                 <div class="ms-3 mt-3">
@@ -237,7 +237,7 @@ export default function Collections() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
 
 
@@ -254,7 +254,7 @@ export default function Collections() {
 
                     <a >
                       <img src={item.url} alt="Image" style={{ width: "350px", height: "250px" }} /></a>
-                    <button class="wishlist-button heart"><span class="number-like"> 100</span></button>
+                    {/* <button class="wishlist-button heart"><span class="number-like"> 100</span></button> */}
 
                   </div>
                   <div className="date_inner">

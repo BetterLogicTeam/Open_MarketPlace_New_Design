@@ -398,7 +398,7 @@ class AuctionsOne extends Component {
               <div class="col-md-12">
                 <div class="heading-live-auctions">
                   <h2 class="tf-title pb-18">Live Auctions</h2>
-                  <a href="explore-3.html" class="exp style2">
+                  <a href="/auctions" class="exp style2">
                     EXPLORE MORE
                   </a>
                 </div>
@@ -430,9 +430,9 @@ class AuctionsOne extends Component {
                                       style={{ width: "350px", height: "250px" }}
                                     />
                                   </a>
-                                  <button class="wishlist-button heart">
+                                  {/* <button class="wishlist-button heart">
                                     <span class="number-like"> 100</span>
-                                  </button>
+                                  </button> */}
                                   <div class="featured-countdown" >
                                     <MdLocalFireDepartment className="fs-4" />
                                     <span class=""></span>

@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from "react";
 import { selectUserAddress } from "../../features/userSlice";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import homepic from "../../flat,750x1000,075,f.jpg";
 import { IoIosRocket } from "react-icons/io";
 import { ImFilesEmpty } from "react-icons/im";
@@ -40,17 +40,17 @@ export default function Hero() {
                         <div class="flat-bt-slider flex style2">
                           <a
                             href="explore-1.html"
-                            class="sc-button header-slider style_icon style style-1 fl-button text-white "
+                            class="sc-button header-slider style_icon style style-1 fl-button text-white color_text "
                           >
                             <IoIosRocket className="fs-4" />
-                            <span className="ms-1">Explore</span>
+                            <Link to="/explore-3"><span className="ms-1">Explore</span></Link>
                           </a>
                           <a
                             href="create-item.html"
-                            class="sc-button header-slider style_icon style style-1 fl-button pri-1 ms-4 text-white "
+                            class="sc-button header-slider style_icon style style-1 fl-button pri-1 ms-4 text-white color_text"
                           >
                             <ImFilesEmpty className="fs-5" />
-                            <span className="ms-2">Create</span>
+                           <Link to="/authors" className> <span className="ms-2">Create</span></Link>
                           </a>
                         </div>
                       </div>

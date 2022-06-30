@@ -47,10 +47,18 @@
 
 .sc-button.style-1 {
     border: 2px solid #5142FC;
-    color: #fff;
+    color: #fff !important;
     background: transparent none repeat scroll 0 0;
 }
+.color_text{
+    color: #fff !important;
+}
 
+.color_text:hover{
+    color: #5142FC !important;
+    background-color: #fff;
+
+}
 .sc-button {
     padding: 15px 35px;
 

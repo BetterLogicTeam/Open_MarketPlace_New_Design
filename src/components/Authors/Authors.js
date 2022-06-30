@@ -14,6 +14,8 @@ import { toast } from "react-toastify";
 import { CreateNFT, CreateNFT_ABI } from '../Utils/Contract'
 import { loadWeb3 } from "../Api/api";
 import women_drink from '../../Assets/women_drink.jpg'
+import Loading from "../Loading/Loading";
+
 
 
 
@@ -29,36 +31,11 @@ export default function Authors() {
   let [image, setImage] = useState("");
   let [myData, setMydata] = useState(null);
   let [addressacc, setaddressacc] = useState();
-
+  let [isSpinner, setIsSpinner] = useState(false)
   let [myUrl, setMyUrl] = useState(women_drink)
   const { saveFile, moralisFile } = useMoralisFile()
   const { authenticate, isAuthenticated, isAuthenticating, user, account, logout, initialize } = useMoralis();
 
-
-  async function uploadFile(e) {
-    try {
-
-
-      //     await authenticate({signingMessage: "Log in using Moralis" }
-      //       ).then(async function (user) {
-      //         console.log("logged in user:", user);
-      //         const file = e.target.files[0]
-      //  const fileIpfs =new Moralis.File(file.name, file)
-      //          await fileIpfs.saveIPFS(null, {useMasterKey:true})
-      //          console.log("files", fileIpfs);
-      //          const fileIpf =new Moralis.File(file.name, file)
-      //          await fileIpf.saveIPFS(null, {useMasterKey:true})
-      //          console.log("files", fileIpf);
-
-      //       })
-      //       .catch(function (error) {
-      //         console.log(error);
-      //       });
-
-    } catch (error) {
-      console.log('Error uploading file: ', error)
-    }
-  }
 
   const IpfsStorage = async (e) => {
     e.preventDefault()
@@ -68,38 +45,47 @@ export default function Authors() {
     if (nftImage == undefined) {
       toast.error("Please Upload Image")
     } else {
-      if (formInput.name == '' || formInput.price == '' || formInput.description == '') {
-        toast.error("Please Enter Data In Input Field")
+      let nftImageName = nftImage.name;
+      if (nftImageName.endsWith(".jpg") || nftImageName.endsWith(".png") || nftImageName.endsWith(".gif") || nftImageName.endsWith(".mp4") || nftImageName.endsWith(".webp") || nftImageName.endsWith(".jpeg") || nftImageName.endsWith(".PNG") || nftImageName.endsWith(".JPG") || nftImageName.endsWith(".JPEG") || nftImageName.endsWith(".jpeg") || nftImageName.endsWith(".GIF") || nftImageName.endsWith(".WEBP") || nftImageName.endsWith(".MP4") || nftImageName.endsWith(".pjpeg") || nftImageName.endsWith(".jfif") || nftImageName.endsWith(".avif")
+        || nftImageName.endsWith(".SVG") || nftImageName.endsWith(".svg") || nftImageName.endsWith(".apng") || nftImageName.endsWith(".APNG") || nftImageName.endsWith(".AVIF")
+      ) {
+        if (formInput.name == '' || formInput.price == '' || formInput.description == '') {
+          toast.error("Please Enter Data In Input Field")
 
-      } else {
-        await authenticate({ signingMessage: "Log in using Moralis" }
-        ).then(async function (user) {
-          console.log("logged in user:", user);
-          const fileIpfs = new Moralis.File(formInput.name, nftImage)
-          await fileIpfs.saveIPFS(null, { useMasterKey: true })
-          console.log("Iamge", fileIpfs._ipfs);
-          let  urlimage=fileIpfs._ipfs
-          setMyUrl(fileIpfs._ipfs)
-          let metaData = {
-            image: fileIpfs._ipfs,
-            description: formInput.description,
-            title: formInput.name,
-            name: formInput.price
-          }
-          const fileIpf = new Moralis.File("metadata.json", {
-            base64: btoa(JSON.stringify(metaData))
+        } else {
+          await authenticate({ signingMessage: "Log in using Moralis" }
+          ).then(async function (user) {
+            console.log("logged in user:", user);
+            const fileIpfs = new Moralis.File(formInput.name, nftImage)
+            await fileIpfs.saveIPFS(null, { useMasterKey: true })
+            console.log("Iamge", fileIpfs._ipfs);
+            let urlimage = fileIpfs._ipfs
+            setMyUrl(fileIpfs._ipfs)
+            let metaData = {
+              image: fileIpfs._ipfs,
+              description: formInput.description,
+              title: formInput.name,
+              name: formInput.price
+            }
+            const fileIpf = new Moralis.File("metadata.json", {
+              base64: btoa(JSON.stringify(metaData))
+            })
+            await fileIpf.saveIPFS(null, { useMasterKey: true })
+            console.log("files", fileIpf._ipfs);
+
+            setGetInput(fileIpf._ipfs)
+            CreateNftUR(urlimage)
+
           })
-          await fileIpf.saveIPFS(null, { useMasterKey: true })
-          console.log("files", fileIpf._ipfs);
-        
-          setGetInput(fileIpf._ipfs)
-          CreateNftUR(urlimage)
+            .catch(function (error) {
+              console.log(error);
+            });
+        }
+      } else {
+        toast.error("Please Upload PNG, JPG, GIF, WEBP or MP4 Data")
 
-        })
-          .catch(function (error) {
-            console.log(error);
-          });
       }
+
     }
 
 
@@ -133,37 +119,41 @@ export default function Authors() {
   }
 
 
-  const CreateNftUR = async(url) => {
+  const CreateNftUR = async (url) => {
+    setIsSpinner(true)
     let acc = await loadWeb3();
     const web3 = window.web3;
-    console.log("myUrl",url);
+    console.log("myUrl", url);
     try {
       let nftContractOf = new web3.eth.Contract(CreateNFT_ABI, CreateNFT);
       await nftContractOf.methods.createToken(url).send({
         from: acc,
 
       });
+      setIsSpinner(false)
 
 
     } catch (e) {
       console.log("Error While Call Create Nft Function", e);
+      setIsSpinner(false)
+
     }
   }
 
 
-  const callfunctionhere=async()=>{
-   let acc=await loadWeb3()
-    acc = acc.substring(0,4)+'...'+acc.substring(acc.length-4)
-   setaddressacc(acc)
+  const callfunctionhere = async () => {
+    let acc = await loadWeb3()
+    acc = acc.substring(0, 4) + '...' + acc.substring(acc.length - 4)
+    setaddressacc(acc)
 
   }
 
   useEffect(() => {
 
     callfunctionhere()
-    
+
   }, [])
-  
+
 
 
   return (
@@ -181,12 +171,17 @@ export default function Authors() {
           </div>
         </div>
       </section>
+      {
+        isSpinner ? <Loading /> : <></>
 
+      }
       <div class="tf-create-item tf-section">
         <div class="container">
           <div class="row">
             <div class="col-xl-4 col-lg-6 col-md-6 col-12">
               <h4 class="title-create-item">Preview item</h4>
+
+             
               <div class="sc-card-product">
                 <div class="card-media">
                   <a ><img src={myUrl} alt="Image" /></a>
@@ -321,7 +316,10 @@ export default function Authors() {
                         <textarea placeholder="e.g. “This is very limited item”" onChange={(e) => setDescription(e.target.value)}></textarea>
                       </form>
                     </div>
-                    <div class="content-inner" style={{ display: "none" }}>
+
+    
+
+                    {/* <div class="content-inner" style={{ display: "none" }}>
                       <form action="#">
                         <h4 class="title-create-item">Price</h4>
                         <input type="text" placeholder="Enter price for one item (ETH)" />
@@ -346,7 +344,7 @@ export default function Authors() {
                         <h4 class="title-create-item">Description</h4>
                         <textarea placeholder="e.g. “This is very limited item”"></textarea>
                       </form>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
