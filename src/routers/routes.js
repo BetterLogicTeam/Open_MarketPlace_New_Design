@@ -35,6 +35,9 @@ import Purchase from "../components/Explore/Purchase";
 import Auctionsbiding from "../components/Authors/Auctionsbiding";
 import AuctionModal from "../components/Auctions/AuctionModal";
 import Authors_new from "../components/Authors_new_nav/Authors_new";
+import To_tranding_NFT from "../components/Collections/To_tranding_NFT";
+import Collection_Purchase from "../components/Collections/Collection_Purchase";
+import Collection_Auction from "../components/Collections/Collection_Auction";
 
 
 
@@ -77,8 +80,14 @@ class MyRouts extends React.Component {
             />
             <Route exact path='/Auctionsbide/:id' component={Auctionsbiding} />
             <Route exact path='/AuctionModal/:id' component={AuctionModal} />
+            <Route exact path='/Collection_Auction/:id' component={Collection_Auction} />
+
+            <Route exact path="/Top_tranding_NFT" component={To_tranding_NFT} />
+
 
             <Route exact path='/purchase/:id' component={Purchase} />
+            <Route exact path='/Collection_Purchase/:id' component={Collection_Purchase} />
+
             <Route exact path="/explore-1" component={ExploreOne} />
             <Route exact path="/explore-2" component={ExploreTwo} />
             <Route exact path="/explore-3" component={ExploreThree} />

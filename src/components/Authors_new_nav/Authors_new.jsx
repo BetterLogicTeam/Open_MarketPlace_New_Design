@@ -1,8 +1,59 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Footer from '../Footer/Footer'
 import './Authors_style_new.css'
 import {TiTick} from 'react-icons/ti'
+import axios from 'axios';
+import { loadWeb3 } from '../Api/api';
+import { useSelector } from 'react-redux';
+import { selectUserAddress } from '../../features/userSlice';
 export default function Authors_new() {
+    const [userData, setUserData] = useState(null);
+    const [FirstArray, setFirstArray] = useState(null);
+
+
+    const useraddress = useSelector(selectUserAddress);
+    console.log("Address_here", useraddress);
+
+
+
+
+    const fetchData = async () => {
+        let acc = await loadWeb3()
+        // acc = acc.toUpperCase()
+        let Array_data = []
+
+
+        let getUserAddress = await axios.get('https://whenftapi.herokuapp.com/trending_address_marketplace?id=100');
+        // console.log("Api_Data121", getUserAddress.data.data);
+        getUserAddress = getUserAddress?.data?.data
+        let get_Length = getUserAddress?.length;
+        // console.log("get_Length", get_Length);
+        for (let i = 0; i < get_Length; i++) {
+
+            // console.log("acc ii", getUserAddress[i].useraddress);
+            // console.log("useraddress", useraddress);
+            let res = await axios.post("https://whenftapi.herokuapp.com/get_user_profile", {
+                "address": getUserAddress[i]?.useraddress,
+
+            })
+            Array_data = [...Array_data, {name:res?.data?.data[0]?.username,image:res?.data?.data[0]?.image,address:res?.data?.data[0]?.address}]
+
+            console.log("res_user", res?.data?.data);
+            setFirstArray(Array_data)
+        }
+
+
+
+    };
+
+
+
+   
+
+    useEffect(() => {
+        fetchData()  
+        // SecondArray()
+    }, [])
     return (
         <div>
             <section class="flat-title-page inner top_bg_activity ">
@@ -37,21 +88,31 @@ export default function Authors_new() {
                         <div class="col-md-12">
                             <div class="swiper-container seller style2 seller-slider2 button-arow-style ">
                                 <div class="row top_seller_here">
-                                    <div class=" col-lg-2 col-md-6  swiper-slide">
-                                        <div class="slider-item">
-                                            <div class="sc-author-box style-2">
-                                                <div class="author-avatar">
-                                                    <img src="images/avatar/avt-1.jpg" alt="" class="avatar" />
-                                                    <div class="badge"></div>
-                                                </div>
-                                                <div class="author-infor">
-                                                    <h5><a href="author02.html">Crispin Berry</a></h5>
-                                                    <span class="price">214.2 ETH</span>
+                                    
+                                {
+                                    FirstArray?.map((items, index) => {
+                                        return (<>
+                                            <div class=" col-lg-2 col-md-6  swiper-slide">
+                                                <div class="slider-item">
+                                                    <div class="sc-author-box style-2">
+                                                        <div class="author-avatar">
+                                                            <img src={items?.image} alt="" class="avatar" />
+                                                            <div class="badge"></div>
+                                                        </div>
+                                                        <div class="author-infor">
+                                                            <h5><a href="author02.html">{items?.name}</a></h5>
+                                                            <span class="price">
+                                                            {/* {items?.address.substring(0, 8) + "..." + items?.address.substring(items?.address.length - 8)} */}
+                                                            </span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class=" col-lg-2 col-md-6 swiper-slide">
+
+                                        </>)
+                                    })
+                                }
+                                    {/* <div class=" col-lg-2 col-md-6 swiper-slide">
                                         <div class="slider-item">
                                             <div class="sc-author-box style-2">
                                                 <div class="author-avatar">
@@ -120,7 +181,7 @@ export default function Authors_new() {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
 
                             </div>

@@ -15,6 +15,7 @@ import { CreateNFT, CreateNFT_ABI } from '../Utils/Contract'
 import { loadWeb3 } from "../Api/api";
 import women_drink from '../../Assets/women_drink.jpg'
 import Loading from "../Loading/Loading";
+import { useHistory } from "react-router";
 
 
 
@@ -35,15 +36,20 @@ export default function Authors() {
   let [myUrl, setMyUrl] = useState(women_drink)
   const { saveFile, moralisFile } = useMoralisFile()
   const { authenticate, isAuthenticated, isAuthenticating, user, account, logout, initialize } = useMoralis();
+  const history = useHistory();
 
 
   const IpfsStorage = async (e) => {
+    setIsSpinner(true)
+
     e.preventDefault()
     console.log("nftImage", nftImage.name)
     console.log("formInput", formInput);
 
     if (nftImage == undefined) {
       toast.error("Please Upload Image")
+      setIsSpinner(false)
+
     } else {
       let nftImageName = nftImage.name;
       if (nftImageName.endsWith(".jpg") || nftImageName.endsWith(".png") || nftImageName.endsWith(".gif") || nftImageName.endsWith(".mp4") || nftImageName.endsWith(".webp") || nftImageName.endsWith(".jpeg") || nftImageName.endsWith(".PNG") || nftImageName.endsWith(".JPG") || nftImageName.endsWith(".JPEG") || nftImageName.endsWith(".jpeg") || nftImageName.endsWith(".GIF") || nftImageName.endsWith(".WEBP") || nftImageName.endsWith(".MP4") || nftImageName.endsWith(".pjpeg") || nftImageName.endsWith(".jfif") || nftImageName.endsWith(".avif")
@@ -51,6 +57,8 @@ export default function Authors() {
       ) {
         if (formInput.name == '' || formInput.price == '' || formInput.description == '') {
           toast.error("Please Enter Data In Input Field")
+      setIsSpinner(false)
+
 
         } else {
           await authenticate({ signingMessage: "Log in using Moralis" }
@@ -79,10 +87,14 @@ export default function Authors() {
           })
             .catch(function (error) {
               console.log(error);
+      setIsSpinner(false)
+
             });
         }
       } else {
         toast.error("Please Upload PNG, JPG, GIF, WEBP or MP4 Data")
+      setIsSpinner(false)
+
 
       }
 
@@ -130,6 +142,10 @@ export default function Authors() {
         from: acc,
 
       });
+      history.push("/My_Collection");
+
+
+
       setIsSpinner(false)
 
 

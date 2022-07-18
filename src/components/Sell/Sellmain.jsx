@@ -40,6 +40,7 @@ export default function Sellmain() {
   let [NFTurl, setNFTurl] = useState()
 
 
+  const history = useHistory();
 
 
 
@@ -269,7 +270,7 @@ export default function Sellmain() {
             value_price = web3.utils.toWei(value_price)
             let curreny_time = Math.floor(new Date().getTime() / 1000.0)
 
-            console.log("tayyab", curreny_time)
+            // console.log("tayyab", curreny_time)
 
 
             let nftContractOftoken = new web3.eth.Contract(nftMarketToken_Abi, ownadd);
@@ -341,6 +342,8 @@ export default function Sellmain() {
             // toast.success("Success")
             setIsSpinner(false)
             toast.success("Transion Compelete")
+                history.push("/My_Collection");
+
 
 
 

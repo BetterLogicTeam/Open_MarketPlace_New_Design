@@ -1,7 +1,41 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router';
 import './Popular_collection.css'
 
 export default function Popular_Collection() {
+    const [Data, setData] = useState()
+    const [isOnAuction, setisOnAuction] = useState()
+    let myHistory = useHistory();
+
+
+    const ApiData = async () => {
+        try {
+            let res = await axios.get('https://whenftapi.herokuapp.com/trending_marketplace?id=100');
+            console.log("Api_Data12125", res.data.data);
+            res = res.data.data
+            setData(res)
+            // let res_length=res.length;
+            // console.log("res_length", res_length);
+            // for(let i=0;i<res_length;i++){
+            //     let data=res[i].isOnAuction
+            // console.log("DAta", data);
+
+            // }
+
+
+        } catch (e) {
+            console.log("Fatch Api", e);
+        }
+    }
+
+
+    useEffect(() => {
+        ApiData()
+    }, [])
+
+
+
     return (
         <div>
             <section class="tf-section live-auctions style4 no-pt-mb mobie-style bg_Poluar_colution" >
@@ -10,11 +44,118 @@ export default function Popular_Collection() {
                         <div class="col-md-12">
                             <div class="heading-live-auctions">
                                 <h2 class="tf-title pb-17 text-left">
-                                    Popular Collection</h2>
-                                <a href="explore-3.html" class="exp style2">EXPLORE MORE</a>
+                                    Most Tranding</h2>
+                                <a href="/Top_tranding_NFT" class="exp style2">EXPLORE MORE</a>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        {
+                            Data?.slice(0,3).map((item, index) => {
+                                // console.log("isOnAuction", item.isOnAuction);
+                                // setisOnAuction(item.isOnAuction)
+                                return (
+                                    <>
+                                        {
+                                            item.isOnAuction == 1 ? (
+                                                <>
+                                                    <div class="fl-item col-xl-4 col-lg-4 col-md-6 col-sm-6"
+                                                        onClick={() => myHistory.push("/Collection_Auction/" + index)} 
+                                                        style={{ display: "block", cursor: "pointer" }} >
+                                                        <div class="sc-card-product coming_soon">
+                                                            <div class="card-media">
+
+                                                                <a >
+                                                                    <img src={item.url} alt="Image" style={{ width: "350px", height: "250px" }} /></a>
+                                                                {/* <button class="wishlist-button heart"><span class="number-like"> 100</span></button> */}
+
+                                                            </div>
+                                                            <div className="date_inner">
+
+                                                                <span className="text-white " style={{ fontSize: "13px", textAlign: "center" }}>CREATED AT: {item.edate}</span>
+                                                            </div>
+
+
+                                                            <div class="card-title">
+                                                                <h5 class="style2 fs-4"> {item?.name}</h5>
+                                                                <div class="tags">bsc {item.isOnAuction}</div>
+                                                            </div>
+                                                            <div class="meta-info">
+                                                                <div class="author">
+                                                                    <div class="avatar mt-n5">
+                                                                        <img src={item.url} alt="Image" style={{ width: "50px", height: "50px" }} />
+                                                                    </div>
+                                                                    <div class="info mt-n4 ">
+                                                                        <span>Owned By</span>
+                                                                        <h6 className="mt-n1 fs-6">{item?.useraddress.substring(0, 4) + "..." + item?.useraddress.substring(item?.useraddress.length - 4)} </h6>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="price mt-n4">
+                                                                    <span>Tranding</span>
+                                                                    <h5 className="fs-6"> {item.trendCount} </h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-bottom">
+                                                                <a href="#" data-toggle="modal" data-target="#popup_bid" class="sc-button style bag fl-button pri-3"><span>Place Bid</span></a>
+                                                                <a href="activity1.html" class="view-history reload">View History</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </>) :
+                                                (
+                                                    <>
+                                                        <div class="fl-item col-xl-4 col-lg-4 col-md-6 col-sm-6"
+                                                             onClick={() => myHistory.push("/Collection_Purchase/" + index)} 
+                                                            style={{ display: "block", cursor: "pointer" }} >
+                                                            <div class="sc-card-product coming_soon">
+                                                                <div class="card-media">
+
+                                                                    <a >
+                                                                        <img src={item.url} alt="Image" style={{ width: "350px", height: "250px" }} /></a>
+                                                                    {/* <button class="wishlist-button heart"><span class="number-like"> 100</span></button> */}
+
+                                                                </div>
+                                                                <div className="date_inner">
+
+                                                                    <span className="text-white " style={{ fontSize: "13px", textAlign: "center" }}>CREATED AT: {item.edate}</span>
+                                                                </div>
+
+
+                                                                <div class="card-title">
+                                                                    <h5 class="style2 fs-4"> {item?.name}</h5>
+                                                                    <div class="tags">bsc</div>
+                                                                </div>
+                                                                <div class="meta-info">
+                                                                    <div class="author">
+                                                                        <div class="avatar mt-n5">
+                                                                            <img src={item.url} alt="Image" style={{ width: "50px", height: "50px" }} />
+                                                                        </div>
+                                                                        <div class="info mt-n4 ">
+                                                                            <span>Owned By</span>
+                                                                            <h6 className="mt-n1 fs-6">{item?.useraddress.substring(0, 4) + "..." + item?.useraddress.substring(item?.useraddress.length - 4)} </h6>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="price mt-n4">
+                                                                        <span>Tranding</span>
+                                                                        <h5 className="fs-6"> {item.trendCount} </h5>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card-bottom">
+                                                                    <a href="#" data-toggle="modal" data-target="#popup_bid" class="sc-button style bag fl-button pri-3"><span>Place Bid</span></a>
+                                                                    <a href="activity1.html" class="view-history reload">View History</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </>
+                                                )
+
+                                        }
+
+
+                                    </>
+                                )
+                            })
+                        }
+                        {/* <div class="col-md-12">
                             <div class="collection">
                                 <div class="swiper-container show-shadow carousel4 pad-t-20 button-arow-style">
                                     <div class="row">
@@ -142,7 +283,7 @@ export default function Popular_Collection() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>

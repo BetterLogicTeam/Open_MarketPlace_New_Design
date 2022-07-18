@@ -78,6 +78,7 @@ export default function AuctionModal() {
 
     let response_here = res.data.data[id]
     response_here = response_here.url
+    console.log("response_here",response_here);
     setResonse(response_here)
 
     let nftname = res.data.data[id]
@@ -138,10 +139,10 @@ export default function AuctionModal() {
 
     }
 
-    // console.log("Days_here", alldata_here);
+    console.log("Days_here", alldata_here);
     try {
       let nftContractOf = new web3.eth.Contract(nftMarketContractAddress_Abi, nftMarketContractAddress);
-      // console.log("tokenId",alldata_here);
+      console.log("tokenId",alldata_here);
       let hightbid = await nftContractOf.methods.highestBidderMapping(alldata_here).call();
       console.log("hightbid", hightbid.bidderAddr);
       let bidderAdd = hightbid.bidderAddr

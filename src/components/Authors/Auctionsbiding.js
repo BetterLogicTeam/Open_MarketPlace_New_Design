@@ -41,6 +41,7 @@ export default function Auctionsbiding() {
   let [isSpinner, setIsSpinner] = useState(false)
   let [imgul, setimgul] = useState()
 
+  const history = useHistory();
 
 
 
@@ -189,7 +190,7 @@ export default function Auctionsbiding() {
 
             value_price = web3.utils.toWei(value_price);
             let curreny_time = Math.floor(new Date().getTime() / 1000.0);
-            let current_time_and_days = 60 * selecthere;
+            let current_time_and_days = 86400 * selecthere;
             current_time_and_days = current_time_and_days + curreny_time;
 
             // console.log("selecthere", current_time_and_days);
@@ -249,6 +250,7 @@ export default function Auctionsbiding() {
 
             // console.log("postapiPushdata", postapiPushdata);
             toast.success("Transion Compelete")
+            history.push("/auctions");
 
             setIsSpinner(false)
 
@@ -370,6 +372,8 @@ export default function Auctionsbiding() {
                             <option value="5"> 5 Munites</option>
                             <option value="10"> 10 Munites</option>
                             <option value="15"> 15 Munites</option>
+                            <option value="15"> 1 Day</option>
+
                           </select>
                         </div>
 

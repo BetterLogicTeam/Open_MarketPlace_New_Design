@@ -20,6 +20,7 @@ import Web3 from "web3";
 
 
 
+
 export default function Purchase() {
   let [orderdata, setorderdata] = useState()
   const [nftprice, setnftprice] = useState()
@@ -32,17 +33,7 @@ export default function Purchase() {
   let [seller_add, setseller_add] = useState()
   const [tokenid_here, settokenid_here] = useState()
   const [price_fromwei, setprice_fromwei] = useState()
-
-
-
-
-
-
-
-
-
-
-
+  const history = useHistory();
 
 
 
@@ -182,6 +173,8 @@ export default function Purchase() {
           console.log("postapiPushdata", postapiPushdata);
           toast.success("Transion Compelete")
           setIsSpinner(false)
+          history.push("/");
+
         }
 
 

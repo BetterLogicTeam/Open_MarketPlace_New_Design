@@ -14,6 +14,7 @@ import Stack from "@mui/material/Stack";
 import "./Header.css";
 import Avatar from "@mui/material/Avatar";
 import logo_dark from '../../Assets/logo_dark.png'
+import axios from "axios";
 
 
 const style = {
@@ -64,31 +65,61 @@ const Header = (props) => {
   };
 
   const fetchData = async () => {
-    const response = db.collection("userProfile").doc(address);
-    response
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          setUserData(doc.data());
-        } else {
-          console.log("No such doc");
-        }
-      })
-      .catch((error) => {
-        console.log("Error getting doc", error);
-      });
+
+    console.log("address", address);
+
+    let res = await axios.post("https://whenftapi.herokuapp.com/get_user_profile", {
+      "address": address
+    })
+    // console.log("Tayyab",res.data.data);
+
+    if (res.data.data.length == 0) {
+      // console.log("Tayyab");
+      // history.push("/registration");
+
+    } else {
+      // console.log("NAveed",res.data.data.length);
+      setUserData(res.data.data[0].image)
+    }
+
+    // console.log("REsult", res.data.data);
+    // const response = db.collection("userProfile").doc(address);
+    // response
+    //   .get()
+    //   .then((doc) => {
+    //     if (doc.exists) {
+    //       setUserData(doc.data());
+
+    //     } else {
+    //       console.log("No such doc");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log("Error getting doc", error);
+    //   });
   };
 
-  const storeAddress = (address) => {
+  const storeAddress =async (address) => {
     if (address) {
-      var userDocRef = db.collection("userProfile").doc(address);
-      userDocRef.get().then((doc) => {
-        if (doc.exists) {
-          console.log("Document exists");
-        } else {
-          history.push("/registration");
-        }
-      });
+      let res = await axios.post("https://whenftapi.herokuapp.com/get_user_profile", {
+        "address": address
+      })
+      // console.log("Tayyab",res.data.data);
+      if (res.data.data.length == 0) {
+               history.push("/registration");
+
+      } else {
+        
+        setUserData(res.data.data[0].image)
+      }
+      // var userDocRef = db.collection("userProfile").doc(address);
+      // userDocRef.get().then((doc) => {
+      //   if (doc.exists) {
+      //     console.log("Document exists");
+      //   } else {
+      //     history.push("/registration");
+      //   }
+      // });
     }
   };
   const disconnect = () => {
@@ -125,10 +156,12 @@ const Header = (props) => {
     }
   }, []);
   useEffect(() => {
+    fetchData();
+
     if (address) {
       dispatch(setUser(address));
       sessionStorage.setItem("meta-address", JSON.stringify(address));
-      fetchData();
+      // fetchData();
     }
     props.updateAddress(address);
   }, [address]);
@@ -326,43 +359,46 @@ const Header = (props) => {
               </a>
             </li>
             <li className='nav-item mobile ml-3'>
-            {!address && (
-              <li className="nav-item ml-3">
-                <a
-                  style={{
-                    height: "50px",
-                    padding: "16px 12px",
-                    fontSize: "smaller",
-                    background: "1px solid #ED7014",
-                    color: "white",
-                  }}
-                  className="btn mt-1 mb-3 ml-lg-auto btn-bordered-white"
-                  onClick={() => {
-                    connectMetaMask();
-                  }}
-                >
-                  <i className=" mr-md-2" />
-                  SIGN IN WITH METAMASK 
-                </a>
-              </li>
-            )}
+              {!address && (
+                <li className="nav-item ml-3">
+                  <a
+                    style={{
+                      height: "50px",
+                      padding: "16px 12px",
+                      fontSize: "smaller",
+                      background: "1px solid #ED7014",
+                      color: "white",
+                    }}
+                    className="btn mt-1 mb-3 ml-lg-auto btn-bordered-white"
+                    onClick={() => {
+                      connectMetaMask();
+                    }}
+                  >
+                    <i className=" mr-md-2" />
+                    SIGN IN WITH METAMASK
+                  </a>
+                </li>
+              )}
             </li>
-           
+            {
+              console.log("userData", userData)
+            }
+
             <li onClick={() => { history.push('/user-profile') }} style={{ cursor: 'pointer' }} className='nav-item mobile mt-2 ml-3 dropdown' >
-            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <Avatar
-                    alt=""
-                    src={userData?.Image || "/static/images/avatar/1.jpg"}
-                  />
-                </a>
+              <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <Avatar
+                  alt=""
+                  src={userData || "/static/images/avatar/1.jpg"}
+                />
+              </a>
               <ul class="dropdown-menu dropdown_here" aria-labelledby="navbarScrollingDropdown">
-                  <li onClick={() => {
-                    history.push("/user-profile");
-                  }} ><a class="dropdown-item" href="#">Profile</a></li>
-                  <li><a class="dropdown-item" href="/My_Collection">My Collection</a></li>
+                <li onClick={() => {
+                  history.push("/user-profile");
+                }} ><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="/My_Collection">My Collection</a></li>
 
 
-                </ul>
+              </ul>
             </li>
           </ul>
           {/* Navbar Icons */}
@@ -410,7 +446,7 @@ const Header = (props) => {
                   }}
                 >
                   <i className=" mr-md-2" />
-                  SIGN IN WITH METAMASK 
+                  SIGN IN WITH METAMASK
                 </a>
               </li>
             )}
@@ -444,14 +480,14 @@ const Header = (props) => {
             )} */}
             {address ? (
               <li
-              
+
                 style={{ cursor: "pointer" }}
                 className="nav-item  ml-3 navhere "
               >
                 <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <Avatar
                     alt=""
-                    src={userData?.Image || "/static/images/avatar/1.jpg"}
+                    src={userData || "/static/images/avatar/1.jpg"}
                   />
                 </a>
                 <ul class="dropdown-menu dropdown_here" aria-labelledby="navbarScrollingDropdown">

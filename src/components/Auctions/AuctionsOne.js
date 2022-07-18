@@ -409,7 +409,7 @@ class AuctionsOne extends Component {
 
 
 
-                    {liveAuctions && liveAuctions.slice(0, currentLoad).map((items, index) => {
+                    {liveAuctions && liveAuctions.slice(0,3).map((items, index) => {
                       return (
                         <>
 

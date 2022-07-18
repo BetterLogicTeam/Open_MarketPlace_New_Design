@@ -242,7 +242,7 @@ export default function Collections() {
 
 
 
-          {apiData?.map((item, idx) => {
+          {apiData?.slice(0,3).map((item, idx) => {
             return (
 
 

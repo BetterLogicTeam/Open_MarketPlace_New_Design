@@ -6,6 +6,9 @@ import { useSelector } from "react-redux";
 import { selectUserAddress } from "../../features/userSlice";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { useMoralis, useMoralisFile } from 'react-moralis'
+import { Moralis } from 'moralis'
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -20,6 +23,8 @@ const Register = () => {
   const [imageAsFile, setImageAsFile] = useState("");
   const [imageAsUrl, setImageAsUrl] = useState(allInputs);
   const inputRef = useRef(null);
+  const { authenticate, isAuthenticated, isAuthenticating, user, account, logout, initialize } = useMoralis();
+
   const handleFireBaseUpload = () => {
     console.log("start of upload");
     // async magic goes here...
@@ -94,31 +99,67 @@ const Register = () => {
     handleFireBaseUpload();
   };
 
+  // const PostData = async () => {
+  //   try {
+
+  //     console.log("useraddress",useraddress);
+  //     console.log("useraddress",name);
+
+  //     console.log("useraddress",email);
+
+  //     console.log("useraddress",bio);
+
+  //     let image_here=imageAsFile.name
+  //     console.log("useraddress",image_here);
+      
+  //     let res = await axios.post("https://whenftapi.herokuapp.com/update_user_profile", {
+  //       "address": useraddress,
+  //       "username":name ,
+  //       "email": email,
+  //       "bio": bio,
+  //       "image": image_here
+  //     })
+
+  //     console.log("res",res);
+
+
+
+  //   } catch (e) {
+  //     console.log("Error while fatech api", e);
+  //   }
+  // }
+
   const PostData = async () => {
     try {
-
-      console.log("useraddress",useraddress);
-      console.log("useraddress",name);
-
-      console.log("useraddress",email);
-
-      console.log("useraddress",bio);
-
-      let image_here=imageAsFile.name
-      console.log("useraddress",image_here);
-      
-      let res = await axios.post("https://whenftapi.herokuapp.com/update_user_profile", {
-        "address": useraddress,
-        "username":name ,
-        "email": email,
-        "bio": bio,
-        "image": image_here
-      })
-
+      await authenticate({ signingMessage: "Log in using Moralis" }
+      ).then(async function (user) {
+        console.log("logged in user:", user);
+        const fileIpfs = new Moralis.File(name, imageAsFile)
+        await fileIpfs.saveIPFS(null, { useMasterKey: true })
+        console.log("Iamge", fileIpfs._ipfs);
+        let image_IPFS=fileIpfs._ipfs
+        let res = await axios.post("https://whenftapi.herokuapp.com/update_user_profile", {
+          "address": useraddress,
+          "username":name ,
+          "email": email,
+          "bio": bio,
+          "image": image_IPFS
+        })
       console.log("res",res);
 
+      toast.success("Thank you for registration")
+      
+      history.push("/");
+       
 
+      })
+        .catch(function (error) {
+          console.log(error);
+        });
 
+    
+
+      // console.log("res",res);
     } catch (e) {
       console.log("Error while fatech api", e);
     }

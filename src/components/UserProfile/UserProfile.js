@@ -11,6 +11,7 @@ import axios from "axios";
 import { withRouter } from "react-router";
 import { useSelector } from "react-redux";
 import { selectUserAddress } from "../../features/userSlice";
+import { loadWeb3 } from "../Api/api";
 
 const NftView = ({ src }) => {
   const [img, setImg] = useState("");
@@ -118,40 +119,47 @@ const UserProfile = () => {
     // fetchData();
     fetchImageObject();
   }, [nftData]);
-  const fetchData = async () => {
-    // console.log({ useraddress });
-    const response = db.collection("userProfile").doc(useraddress);
-    response
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          let data = doc.data();
-          setUserData(doc.data());
-        } else {
-          console.log("No such doc");
-        }
-      })
-      .catch((error) => {
-        console.log("Error getting doc", error);
-      });
-  };
-  if (useraddress && !userData) {
-    fetchData();
-    // getUserNFTs();
-  }
-  if (useraddress && !nftData) {
-    getUserNFTs();
-  }
+  // const fetchData = async () => {
+  //   let acc = await loadWeb3()
+  //   acc = acc.toUpperCase()
+
+
+  //   console.log("acc", acc);
+  //   console.log("useraddress", acc);
+
+  //   const response = db.collection("userProfile").doc(useraddress);
+  //   response
+  //     .get()
+  //     .then((doc) => {
+  //       if (doc.exists) {
+  //         let data = doc.data();
+  //         console.log("User_dta", data);
+  //         setUserData(doc.data());
+  //       } else {
+  //         console.log("No such doc");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error getting doc", error);
+  //     });
+  // };
+  // if (useraddress && !userData) {
+  //   fetchData();
+  //   // getUserNFTs();
+  // }
+  // if (useraddress && !nftData) {
+  //   getUserNFTs();
+  // }
 
 
   // const PostData = async () => {
   //   try {
 
-     
+
   //     console.log("useraddress",useraddress);
   //     let res = await axios.post("https://whenftapi.herokuapp.com/get_user_profile", {
   //       "address": useraddress,
-     
+
   //     })
 
   //     console.log("res",res);
@@ -164,35 +172,58 @@ const UserProfile = () => {
   // }
 
 
-  useEffect(() => {
 
+  const Fatchdata = async () => {
+
+    let acc= await loadWeb3()
+    try {
+
+
+      console.log("useraddress", acc);
+      let res = await axios.post("https://whenftapi.herokuapp.com/get_user_profile", {
+        "address": acc
+
+      })
+      setUserData(res.data.data[0])
+      console.log("res", res);
+
+
+
+    } catch (e) {
+      console.log("Error while fatech api", e);
+    }
+  }
+
+
+  useEffect(() => {
+    Fatchdata()
     // PostData()
   }, []);
   return (
     <div className="userProfile">
-        <div className="overlay"></div>
+      <div className="overlay"></div>
 
       <div className="userProfile__container1 position-relative">
         <Avatar
           alt=""
-          src={userData?.Image || "/static/images/avatar/1.jpg"}
+          src={userData?.image || "/static/images/avatar/1.jpg"}
           sx={{ width: 280, height: 280 }}
         />
         <div className="container1__part2">
           <div className="content__1">
-            <h3>{userData?.Name || "User Name"}</h3>
-            <p>{userData?.Bio || "Bio"}</p>
+            <h3>{userData?.username || "User Name"}</h3>
+            <p>{userData?.bio || "Bio"}</p>
           </div>
 
           <div className="content__2">
-            <p>{userData?.MetamaskAddress || "Address"}</p>
+            <p>{userData?.address || "Address"}</p>
             {useraddress && (
               <button
                 onClick={() => {
                   history.push("/edit-profile");
                 }}
                 className="edit__button fs-5 "
-                style={{width:"12rem"}}
+                style={{ width: "12rem" }}
               >
                 Edit Profile
               </button>

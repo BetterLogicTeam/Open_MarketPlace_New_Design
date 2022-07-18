@@ -6,6 +6,9 @@ import { useSelector } from "react-redux";
 import { selectUserAddress } from "../../features/userSlice";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { useMoralis, useMoralisFile } from 'react-moralis'
+import { Moralis } from 'moralis'
+import { toast } from "react-toastify";
 
 const EditProfile = () => {
   const [name, setName] = useState("");
@@ -20,6 +23,8 @@ const EditProfile = () => {
   const allInputs = { imgUrl: "" };
   const [imageAsFile, setImageAsFile] = useState("");
   const [imageAsUrl, setImageAsUrl] = useState(allInputs);
+  const { authenticate, isAuthenticated, isAuthenticating, user, account, logout, initialize } = useMoralis();
+
   const handleFireBaseUpload = () => {
     console.log("start of upload");
     // async magic goes here...
@@ -27,6 +32,7 @@ const EditProfile = () => {
       console.error(`not an image, the image file is a ${typeof imageAsFile}`);
     }
     const uploadTask = storage.ref(`/images/${useraddress}`).put(imageAsFile);
+    console.log("chek_ul",uploadTask);
 
     //initiates the firebase side uploading
     uploadTask.on(
@@ -47,7 +53,8 @@ const EditProfile = () => {
           .child(`/images/${useraddress}`)
           .getDownloadURL()
           .then((fireBaseUrl) => {
-            console.log(fireBaseUrl);
+            console.log("Iamge_ule",fireBaseUrl);
+           
             db.collection("userProfile").doc(useraddress).set({
               MetamaskAddress: useraddress,
               Name: name,
@@ -66,6 +73,7 @@ const EditProfile = () => {
   };
   const handleImageAsFile = (e) => {
     const image = e.target.files[0];
+    console.log("image",image);
     setImageAsFile(image);
   };
 
@@ -97,26 +105,42 @@ const EditProfile = () => {
     // console.log("btn click");
     handleFireBaseUpload();
   };
+  
+  const PostData = async () => {
+    try {
+      await authenticate({ signingMessage: "Log in using Moralis" }
+      ).then(async function (user) {
+        console.log("logged in user:", user);
+        const fileIpfs = new Moralis.File(name, imageAsFile)
+        await fileIpfs.saveIPFS(null, { useMasterKey: true })
+        console.log("Iamge", fileIpfs._ipfs);
+        let image_IPFS=fileIpfs._ipfs
+        let res = await axios.post("https://whenftapi.herokuapp.com/update_user_profile", {
+          "address": useraddress,
+          "username":name ,
+          "email": email,
+          "bio": bio,
+          "image": image_IPFS
+        })
+      console.log("res",res);
 
-  // const PostData = async () => {
-  //   try {
+      toast.success("Your profile is updated")
+      
+      history.push("/");
+       
 
-  //     let res = await axios.get("https://whenftapi.herokuapp.com/update_user_profile", {
-  //       "address": useraddress,
-  //       "username":name ,
-  //       "email": email,
-  //       "bio": bio,
-  //       "image": imageAsFile
-  //     })
+      })
+        .catch(function (error) {
+          console.log(error);
+        });
 
-  //     console.log("res",res);
+    
 
-
-
-  //   } catch (e) {
-  //     console.log("Error while fatech api", e);
-  //   }
-  // }
+      // console.log("res",res);
+    } catch (e) {
+      console.log("Error while fatech api", e);
+    }
+  }
 
   return (
     <div className="editProfile">
@@ -168,8 +192,8 @@ const EditProfile = () => {
             ) : (
               <button 
 
-              // onClick={()=>PostData()}
-              onClick={handleEdit} 
+              onClick={()=>PostData()}
+              // onClick={handleEdit} 
               
               className="editProfile__button">
                 Save Profile
