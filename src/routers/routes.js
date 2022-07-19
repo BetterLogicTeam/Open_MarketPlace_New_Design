@@ -38,6 +38,11 @@ import Authors_new from "../components/Authors_new_nav/Authors_new";
 import To_tranding_NFT from "../components/Collections/To_tranding_NFT";
 import Collection_Purchase from "../components/Collections/Collection_Purchase";
 import Collection_Auction from "../components/Collections/Collection_Auction";
+import Creater_Details from "../components/Creater_Details/Creater_Details";
+import { CreateNFT } from "../components/Utils/Contract";
+import Creater_Nft from "../components/Creater_Details/Creater_Nft";
+import Sale_NFT from "../components/Creater_Details/Sale_NFT";
+import Auction_NFT from "../components/Creater_Details/Auction_NFT";
 
 
 
@@ -79,6 +84,12 @@ class MyRouts extends React.Component {
               )}
             />
             <Route exact path='/Auctionsbide/:id' component={Auctionsbiding} />
+            <Route exact path='/Auction_NFT/:id' component={Auction_NFT} />
+
+            <Route exact path='/CreateNFT/:id' component={Creater_Nft} />
+            <Route exact path='/Sale_NFT/:id' component={Sale_NFT} />
+
+
             <Route exact path='/AuctionModal/:id' component={AuctionModal} />
             <Route exact path='/Collection_Auction/:id' component={Collection_Auction} />
 
@@ -102,6 +113,8 @@ class MyRouts extends React.Component {
             <Route exact path="/Authors_new" component={Authors_new} />
 
             <Route exact path="/activity" component={Activity} />
+            <Route exact path="/Creater_Details/:id" component={Creater_Details} />
+
             <Route exact path="/blog" component={Blog} />
             <Route exact path="/blog-single" component={BlogSingle} />
             <Route exact path="/help-center" component={HelpCenter} />

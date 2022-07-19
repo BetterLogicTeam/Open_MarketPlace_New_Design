@@ -7,11 +7,13 @@ import { useSelector } from "react-redux";
 import { selectUserAddress } from "../../features/userSlice";
 import { BiUser } from 'react-icons/bi'
 import Avatar from "@mui/material/Avatar";
+import { Link, useHistory } from 'react-router-dom';
 
 export default function Top_seler() {
     const [userData, setUserData] = useState(null);
     const [FirstArray, setFirstArray] = useState(null);
 
+    let myHistory = useHistory();
 
     const useraddress = useSelector(selectUserAddress);
     console.log("Address_here", useraddress);
@@ -74,21 +76,26 @@ export default function Top_seler() {
                             {
                                 FirstArray?.map((items, index) => {
                                     return (<>
-                                        <div class=" col-lg-2 col-md-6  swiper-slide">
-                                            <div class="slider-item">
+                                        <div class=" col-lg-2 col-md-6  swiper-slide" style={{cursor:"pointer"}}>
+                                            <div class="slider-item" onClick={() => myHistory.push("/Creater_Details/" + index)}>
                                                 <div class="sc-author-box style-2">
+                                                {/* <Link to='/Creater_Details'> */}
+
                                                     <div class="author-avatar">
                                                         {/* <img src={items?.image || "/static/images/avatar/1.jpg"} alt="" class="avatar" />
-                                                        <div class="badge"></div> */}
+                                                     
+                                                     <div class="badge"></div> */}
                                                         <Avatar
                                                             // class="avatar"
                                                             alt=""
                                                             src={items?.image  || "/static/images/avatar/1.jpg"}
                                                             sx={{ width: "130px", height: "130px",borderRadius:"40px" }}
                                                         />
+
                                                         <div class="badge"></div> 
 
                                                     </div>
+                                                    {/* </Link> */}
                                                     <div class="author-infor">
                                                         <h5><a href="author02.html">{items?.name || "User Name"}</a></h5>
                                                         <span class="price">

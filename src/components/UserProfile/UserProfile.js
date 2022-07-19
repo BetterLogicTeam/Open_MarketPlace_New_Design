@@ -175,7 +175,7 @@ const UserProfile = () => {
 
   const Fatchdata = async () => {
 
-    let acc= await loadWeb3()
+    let acc = await loadWeb3()
     try {
 
 
@@ -200,16 +200,16 @@ const UserProfile = () => {
     // PostData()
   }, []);
   return (
-    <div className="userProfile">
+    <div className="userProfile pt-5">
       <div className="overlay"></div>
 
-      <div className="userProfile__container1 position-relative">
+      <div className="userProfile__container1 position-relative pb-5 mt-5 ">
         <Avatar
           alt=""
           src={userData?.image || "/static/images/avatar/1.jpg"}
           sx={{ width: 280, height: 280 }}
         />
-        <div className="container1__part2">
+        <div className="container1__part2 ">
           <div className="content__1">
             <h3>{userData?.username || "User Name"}</h3>
             <p>{userData?.bio || "Bio"}</p>
@@ -231,30 +231,10 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
-      {/* <Divider color="white" /> */}
-      <div className="userProfile_container2">
-        {/* <ul className="mt-5 p-2 netstorm-tab nav nav-tabs" id="nav-tab">
-          <li className="list-item">
-            <a
-              className="active"
-              id="nav-home-tab"
-              data-toggle="pill"
-              href="#nav-home"
-            >
-              <h5 className="m-0">Listed</h5>
-            </a>
-          </li>
-          <li className="lis">
-            <a id="nav-profile-tab" data-toggle="pill" href="#nav-profile">
-              <h5 className="m-0">Created</h5>
-            </a>
-          </li>
-          <li className="list-item">
-            <a id="nav-profile-tab" data-toggle="pill" href="#nav-profile">
-              <h5 className="m-0">Owned</h5>
-            </a>
-          </li>
-        </ul> */}
+     
+     <br /><br /> 
+      {/* <div className="userProfile_container2">
+
         <ul
           style={{ display: "flex", textAlign: "center" }}
           className="mt-5 p-2 netstorm-tab nav nav-tabs"
@@ -284,7 +264,7 @@ const UserProfile = () => {
         <div className="tab-content" id="nav-tabContent">
           <div className="tab-pane fade show active" id="nav-home">
             <ul className="p-4 list-unstyled">
-              {/* Single Tab List */}
+           
               {nftData ? (
                 nftData.map((item, idx) => {
                   return (
@@ -309,7 +289,7 @@ const UserProfile = () => {
           <div className="tab-pane fade" id="nav-profile">
             <div className="owner-meta d-flex align-items-center mt-3">
               <ul>
-                {/* Single Tab List */}
+              
                 {nftData ? (
                   nftData.map((item, idx) => {
                     return (
@@ -321,7 +301,7 @@ const UserProfile = () => {
                         key={`tdo_${idx}`}
                       >
                         <NftView src={item.uri} />
-                        {/* <span className="m-0">{item.uri}</span> */}
+                       
                       </div>
                     );
                   })
@@ -334,7 +314,7 @@ const UserProfile = () => {
           <div className="tab-pane fade" id="nav-contact">
             <div className="owner-meta d-flex align-items-center mt-3">
               <ul className="p-4 list-unstyled">
-                {/* Single Tab List */}
+             
                 {nftData ? (
                   nftData.map((item, idx) => {
                     return (
@@ -360,7 +340,7 @@ const UserProfile = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

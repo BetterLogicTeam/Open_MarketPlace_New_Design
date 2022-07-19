@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import Footer from '../Footer/Footer'
 import './Authors_style_new.css'
-import {TiTick} from 'react-icons/ti'
+import { TiTick } from 'react-icons/ti'
 import axios from 'axios';
 import { loadWeb3 } from '../Api/api';
 import { useSelector } from 'react-redux';
 import { selectUserAddress } from '../../features/userSlice';
+import { useHistory } from 'react-router';
 export default function Authors_new() {
     const [userData, setUserData] = useState(null);
     const [FirstArray, setFirstArray] = useState(null);
 
+    let myHistory = useHistory();
 
     const useraddress = useSelector(selectUserAddress);
     console.log("Address_here", useraddress);
@@ -36,7 +38,7 @@ export default function Authors_new() {
                 "address": getUserAddress[i]?.useraddress,
 
             })
-            Array_data = [...Array_data, {name:res?.data?.data[0]?.username,image:res?.data?.data[0]?.image,address:res?.data?.data[0]?.address}]
+            Array_data = [...Array_data, { name: res?.data?.data[0]?.username, image: res?.data?.data[0]?.image, address: res?.data?.data[0]?.address }]
 
             console.log("res_user", res?.data?.data);
             setFirstArray(Array_data)
@@ -48,10 +50,10 @@ export default function Authors_new() {
 
 
 
-   
+
 
     useEffect(() => {
-        fetchData()  
+        fetchData()
         // SecondArray()
     }, [])
     return (
@@ -88,30 +90,30 @@ export default function Authors_new() {
                         <div class="col-md-12">
                             <div class="swiper-container seller style2 seller-slider2 button-arow-style ">
                                 <div class="row top_seller_here">
-                                    
-                                {
-                                    FirstArray?.map((items, index) => {
-                                        return (<>
-                                            <div class=" col-lg-2 col-md-6  swiper-slide">
-                                                <div class="slider-item">
-                                                    <div class="sc-author-box style-2">
-                                                        <div class="author-avatar">
-                                                            <img src={items?.image} alt="" class="avatar" />
-                                                            <div class="badge"></div>
-                                                        </div>
-                                                        <div class="author-infor">
-                                                            <h5><a href="author02.html">{items?.name}</a></h5>
-                                                            <span class="price">
-                                                            {/* {items?.address.substring(0, 8) + "..." + items?.address.substring(items?.address.length - 8)} */}
-                                                            </span>
+
+                                    {
+                                        FirstArray?.map((items, index) => {
+                                            return (<>
+                                                <div class=" col-lg-2 col-md-6  swiper-slide" style={{cursor:"pointer"}} onClick={() => myHistory.push("/Creater_Details/" + index)}>
+                                                    <div class="slider-item">
+                                                        <div class="sc-author-box style-2">
+                                                            <div class="author-avatar">
+                                                                <img src={items?.image} alt="" class="avatar" />
+                                                                <div class="badge"></div>
+                                                            </div>
+                                                            <div class="author-infor">
+                                                                <h5><a href="author02.html">{items?.name}</a></h5>
+                                                                <span class="price">
+                                                                    {/* {items?.address.substring(0, 8) + "..." + items?.address.substring(items?.address.length - 8)} */}
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                        </>)
-                                    })
-                                }
+                                            </>)
+                                        })
+                                    }
                                     {/* <div class=" col-lg-2 col-md-6 swiper-slide">
                                         <div class="slider-item">
                                             <div class="sc-author-box style-2">
@@ -191,9 +193,8 @@ export default function Authors_new() {
             </section>
             {/* </div> */}
 
-            <div className="inner_headeing text-center heading_main_here_autherher">
+            {/* <div className="inner_headeing text-center heading_main_here_autherher">
                 <h2 className='text-white'>Our Creator</h2>
-                {/* <p className='w-50'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum obcaecati dignissimos quae quo ad iste ipsum officiis deleniti asperiores sit.</p> */}
             </div>
             <div className="container">
                 <div class="col-md-12">
@@ -213,10 +214,10 @@ export default function Authors_new() {
                                                     </div>
                                                     <div class="content mt-n4">
                                                         <h4><a >Creative Art Collection</a></h4>
-                                                        
+
                                                     </div>
                                                 </div>
-                                               <button className='button_folling'>Following</button>
+                                                <button className='button_folling'>Following</button>
                                             </div>
                                             <a href="author02.html">
                                                 <div class="media-images-collection">
@@ -250,10 +251,10 @@ export default function Authors_new() {
                                                     </div>
                                                     <div class="content mt-n4">
                                                         <h4><a>Colorful Abstract</a></h4>
-                                                        
+
                                                     </div>
                                                 </div>
-                                               <button className='button_folling'>Following</button>
+                                                <button className='button_folling'>Following</button>
                                             </div>
                                             <a href="author01.html">
                                                 <div class="media-images-collection">
@@ -287,7 +288,7 @@ export default function Authors_new() {
                                                     </div>
                                                     <div class="content mt-n4">
                                                         <h4><a >Modern Art Collection</a></h4>
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <button className='button_folling'>Following</button>
@@ -318,127 +319,127 @@ export default function Authors_new() {
                 </div>
 
                 <div class="col-md-12">
-                <div class="collection">
-                    <div class="swiper-container show-shadow carousel4 pad-t-20 button-arow-style">
-                        <div class="row">
-                            <div class="col-lg-4 col-md-12">
-                                <div class="slider-item">
-                                    <div class="sc-card-collection style-2 home2">
-                                        <div class="card-bottom">
-                                            <div class="author">
-                                                <div class="sc-author-box style-2">
-                                                    <div class="author-avatar">
-                                                        <img src="images/avatar/avt-1.jpg" alt="" class="avatar" />
-                                                        <div class="badge"></div>
+                    <div class="collection">
+                        <div class="swiper-container show-shadow carousel4 pad-t-20 button-arow-style">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="slider-item">
+                                        <div class="sc-card-collection style-2 home2">
+                                            <div class="card-bottom">
+                                                <div class="author">
+                                                    <div class="sc-author-box style-2">
+                                                        <div class="author-avatar">
+                                                            <img src="images/avatar/avt-1.jpg" alt="" class="avatar" />
+                                                            <div class="badge"></div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="content mt-n4">
-                                                    <h4><a >Creative Art Collection</a></h4>
-                                                    
-                                                </div>
-                                            </div>
-                                           <button className='button_folling'>Following</button>
-                                        </div>
-                                        <a href="author02.html">
-                                            <div class="media-images-collection">
-                                                <div class="box-left">
-                                                    <img src="images/box-item/collection-item-2.jpg" alt="" />
-                                                </div>
-                                                <div class="box-right">
-                                                    <div class="top-img">
-                                                        <img src="images/box-item/collection-item-top-1.jpg" alt="" />
-                                                        <img src="images/box-item/collection-item-top-2.jpg" alt="" />
-                                                    </div>
-                                                    <div class="bottom-img">
-                                                        <img src="images/box-item/collection-item-bottom-4.jpg" alt="" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-12">
-                                <div class="slider-item">
-                                    <div class="sc-card-collection style-2 home2">
-                                        <div class="card-bottom">
-                                            <div class="author">
-                                                <div class="sc-author-box style-2">
-                                                    <div class="author-avatar">
-                                                        <img src="images/avatar/avt-8.jpg" alt="" class="avatar" />
-                                                        <div class="badge"><i class="ripple"></i></div>
-                                                    </div>
-                                                </div>
-                                                <div class="content mt-n4">
-                                                    <h4><a>Colorful Abstract</a></h4>
-                                                    
-                                                </div>
-                                            </div>
-                                           <button className='button_folling'>Following</button>
-                                        </div>
-                                        <a href="author01.html">
-                                            <div class="media-images-collection">
-                                                <div class="box-left">
-                                                    <img src="images/box-item/img-collection23.jpg" alt="" />
-                                                </div>
-                                                <div class="box-right">
-                                                    <div class="top-img">
-                                                        <img src="images/box-item/img-collection24.jpg" alt="" />
-                                                        <img src="images/box-item/img-collection10.jpg" alt="" />
-                                                    </div>
-                                                    <div class="bottom-img">
-                                                        <img src="images/box-item/img-collection11.jpg" alt="" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-12">
-                                <div class="slider-item">
-                                    <div class="sc-card-collection style-2 home2">
-                                        <div class="card-bottom">
-                                            <div class="author">
-                                                <div class="sc-author-box style-2">
-                                                    <div class="author-avatar">
-                                                        <img src="images/avatar/avt-7.jpg" alt="" class="avatar" />
-                                                        <div class="badge"><i class="ripple"></i></div>
-                                                    </div>
-                                                </div>
-                                                <div class="content mt-n4">
-                                                    <h4><a >Modern Art Collection</a></h4>
-                                                    
-                                                </div>
-                                            </div>
-                                            <button className='button_folling'>Following</button>
-                                        </div>
-                                        <a href="author01.html">
-                                            <div class="media-images-collection">
-                                                <div class="box-left">
-                                                    <img src="images/box-item/img-collection12.jpg" alt="" />
-                                                </div>
-                                                <div class="box-right">
-                                                    <div class="top-img">
-                                                        <img src="images/box-item/img-collection18.jpg" alt="" />
-                                                        <img src="images/box-item/img-collection25.jpg" alt="" />
-                                                    </div>
-                                                    <div class="bottom-img">
-                                                        <img src="images/box-item/img-collection17.jpg" alt="" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                                                    <div class="content mt-n4">
+                                                        <h4><a >Creative Art Collection</a></h4>
 
+                                                    </div>
+                                                </div>
+                                                <button className='button_folling'>Following</button>
+                                            </div>
+                                            <a href="author02.html">
+                                                <div class="media-images-collection">
+                                                    <div class="box-left">
+                                                        <img src="images/box-item/collection-item-2.jpg" alt="" />
+                                                    </div>
+                                                    <div class="box-right">
+                                                        <div class="top-img">
+                                                            <img src="images/box-item/collection-item-top-1.jpg" alt="" />
+                                                            <img src="images/box-item/collection-item-top-2.jpg" alt="" />
+                                                        </div>
+                                                        <div class="bottom-img">
+                                                            <img src="images/box-item/collection-item-bottom-4.jpg" alt="" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="slider-item">
+                                        <div class="sc-card-collection style-2 home2">
+                                            <div class="card-bottom">
+                                                <div class="author">
+                                                    <div class="sc-author-box style-2">
+                                                        <div class="author-avatar">
+                                                            <img src="images/avatar/avt-8.jpg" alt="" class="avatar" />
+                                                            <div class="badge"><i class="ripple"></i></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="content mt-n4">
+                                                        <h4><a>Colorful Abstract</a></h4>
+
+                                                    </div>
+                                                </div>
+                                                <button className='button_folling'>Following</button>
+                                            </div>
+                                            <a href="author01.html">
+                                                <div class="media-images-collection">
+                                                    <div class="box-left">
+                                                        <img src="images/box-item/img-collection23.jpg" alt="" />
+                                                    </div>
+                                                    <div class="box-right">
+                                                        <div class="top-img">
+                                                            <img src="images/box-item/img-collection24.jpg" alt="" />
+                                                            <img src="images/box-item/img-collection10.jpg" alt="" />
+                                                        </div>
+                                                        <div class="bottom-img">
+                                                            <img src="images/box-item/img-collection11.jpg" alt="" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="slider-item">
+                                        <div class="sc-card-collection style-2 home2">
+                                            <div class="card-bottom">
+                                                <div class="author">
+                                                    <div class="sc-author-box style-2">
+                                                        <div class="author-avatar">
+                                                            <img src="images/avatar/avt-7.jpg" alt="" class="avatar" />
+                                                            <div class="badge"><i class="ripple"></i></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="content mt-n4">
+                                                        <h4><a >Modern Art Collection</a></h4>
+
+                                                    </div>
+                                                </div>
+                                                <button className='button_folling'>Following</button>
+                                            </div>
+                                            <a href="author01.html">
+                                                <div class="media-images-collection">
+                                                    <div class="box-left">
+                                                        <img src="images/box-item/img-collection12.jpg" alt="" />
+                                                    </div>
+                                                    <div class="box-right">
+                                                        <div class="top-img">
+                                                            <img src="images/box-item/img-collection18.jpg" alt="" />
+                                                            <img src="images/box-item/img-collection25.jpg" alt="" />
+                                                        </div>
+                                                        <div class="bottom-img">
+                                                            <img src="images/box-item/img-collection17.jpg" alt="" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            </div>
+            </div> */}
 
 
 

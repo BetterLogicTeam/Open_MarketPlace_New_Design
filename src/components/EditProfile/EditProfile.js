@@ -158,7 +158,7 @@ const EditProfile = () => {
             <input value={url} onChange={handleUrl} className="form__input" />
           </div> */}
           <div className="form__content">
-            <h4 className="form__text">Bio</h4>
+            <h4 className="form__text">Information</h4>
             <input value={bio} onChange={handleBio} className="form__input" />
           </div>
           {/* <div className="form__content">
