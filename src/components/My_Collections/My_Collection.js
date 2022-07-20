@@ -51,11 +51,8 @@ function My_Collection() {
   const fetchNFTs = async () => {
     let acc = await loadWeb3();
     const web3 = window.web3;
-    let nftContractOf = new web3.eth.Contract(
-      wireNftContractAbi,
-      wireNftContractAddress
-    );
-
+   
+console.log("DATA");
     let myDummyArray = [];
     let imageArray = [];
     initialize();
@@ -86,7 +83,7 @@ function My_Collection() {
       // console.log("count", i);
       // console.log("length", res[i]);
       // console.log("Images , ", res[i].token_uri);
-      let walletOfOwner = await nftContractOf.methods.walletOfOwner(acc).call();
+  
 
 
       // let res_here = await axios.get(

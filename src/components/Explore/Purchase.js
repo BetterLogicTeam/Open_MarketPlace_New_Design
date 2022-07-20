@@ -161,7 +161,7 @@ export default function Purchase() {
           }
           );
 
-          let postapiPushdata = await axios.post('https://whenftapi.herokuapp.com/update_sell_status', {
+          let postapiPushdata = await axios.post('https://openmarket-nft.herokuapp.com/update_sell_status', {
 
             "tokenid": tokenid_here,
 

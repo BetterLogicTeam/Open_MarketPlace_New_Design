@@ -244,7 +244,7 @@ export default function AuctionModal() {
           from: acc,
         })
 
-        let postapiPushdata = await axios.post('https://whenftapi.herokuapp.com/update_auction_status', {
+        let postapiPushdata = await axios.post(' https://openmarket-nft.herokuapp.com/update_auction_status', {
 
           "tokenid": Token_Id,
 

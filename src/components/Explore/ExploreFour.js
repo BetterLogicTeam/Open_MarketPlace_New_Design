@@ -83,18 +83,42 @@ export default function ExploreFour() {
             </div>
           </div>
         </div>
+        <ul direction="horizontal" class="sc-1xf18x6-0 sc-1j0z9gq-1 sc-15fqy1p-0 haVRLx evhtBl bdgsSq">
+        <li class="sc-1j0z9gq-3 dyEHLA">
+          <a direction="horizontal" class="sc-1pie21o-0 elyzfO sc-1xf18x6-0 sc-1twd32i-0 sc-1j0z9gq-7 haVRLx kKpYwv cWqKNz sc-15fqy1p-1 eDhZgX" href="/explore-collections">
+            <span class="sc-1xf18x6-0 sc-1w94ul3-0 sc-1j0z9gq-4 haVRLx jnCfKq idfsez">Collection</span>
+          </a>
+        </li>
+        <li class="sc-1j0z9gq-3 dyEHLA">
+          <a direction="horizontal" class="sc-1pie21o-0 elyzfO sc-1xf18x6-0 sc-1twd32i-0 sc-1j0z9gq-7 haVRLx kKpYwv jbnEyp sc-15fqy1p-1 eDhZgX" href="/explore-collections?tab=top">
+            <span class="sc-1xf18x6-0 sc-1w94ul3-0 sc-1j0z9gq-4 haVRLx jnCfKq idfsez">ULE</span>
+          </a>
+        </li>
+        <li class="sc-1j0z9gq-3 dyEHLA">
+          <a direction="horizontal" class="sc-1pie21o-0 elyzfO sc-1xf18x6-0 sc-1twd32i-0 sc-1j0z9gq-7 haVRLx kKpYwv jbnEyp sc-15fqy1p-1 eDhZgX" href="/explore-collections?tab=art">
+            <span class="sc-1xf18x6-0 sc-1w94ul3-0 sc-1j0z9gq-4 haVRLx jnCfKq idfsez">CST</span>
+          </a>
+        </li>
+        <li class="sc-1j0z9gq-3 dyEHLA">
+          <a direction="horizontal" class="sc-1pie21o-0 elyzfO sc-1xf18x6-0 sc-1twd32i-0 sc-1j0z9gq-7 haVRLx kKpYwv jbnEyp sc-15fqy1p-1 eDhZgX" href="/explore-collections?tab=collectibles">
+            <span class="sc-1xf18x6-0 sc-1w94ul3-0 sc-1j0z9gq-4 haVRLx jnCfKq idfsez">WHE</span>
+          </a>
+        </li>
+   
+      </ul>
       </section>
+      
 
       <div class="tf-section sc-explore-1">
         <div class="container">
           <div class="row">
 
-              {
-                apiData?.map((items, index) => {
-                  return (
-                    <>
+            {
+              apiData?.map((items, index) => {
+                return (
+                  <>
                     <div class="fl-item col-xl-4 col-lg-4 col-md-6 col-sm-6" style={{ display: "block", cursor: "pointer" }}>
-                      <div class="sc-card-product" onClick={() => myHistory.push("/purchase/" + index) }>
+                      <div class="sc-card-product" onClick={() => myHistory.push("/purchase/" + index)}>
                         <div class="card-media">
                           <a ><img src={items.url} alt="Image" style={{ width: "350px", height: "300px" }} /></a>
                           <button class="wishlist-button heart"><span class="number-like"> 100</span></button>

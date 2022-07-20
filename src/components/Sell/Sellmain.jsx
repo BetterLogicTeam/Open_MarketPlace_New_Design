@@ -39,6 +39,7 @@ export default function Sellmain() {
   let [NftName, setNftName] = useState()
   let [NFTurl, setNFTurl] = useState()
 
+  const selectoption = useRef();
 
   const history = useHistory();
 
@@ -77,7 +78,7 @@ export default function Sellmain() {
     let urlhere
     let loopLength = res.length;
     console.log("check", res);
-   
+
 
 
     let name = res.name;
@@ -91,32 +92,32 @@ export default function Sellmain() {
     setNftName(name)
 
     let jsonUsrl = res.token_uri;
-    console.log("res",jsonUsrl);
+    console.log("res", jsonUsrl);
 
 
-    if(jsonUsrl==null){
-      jsonUsrl =women_drink
+    if (jsonUsrl == null) {
+      jsonUsrl = women_drink
       console.log("Image_is_null");
     }
     else if (jsonUsrl.endsWith(".json")) {
-      jsonUsrl= jsonUsrl.replace("json","png");
-      console.log("jsonUsrl",jsonUsrl);
+      jsonUsrl = jsonUsrl.replace("json", "png");
+      console.log("jsonUsrl", jsonUsrl);
     } else if (jsonUsrl.endsWith(".jpg")) {
-      jsonUsrl= jsonUsrl;
-      console.log("jsonUsrl",jsonUsrl);
-    }if(jsonUsrl.startsWith("https://ipfs.moralis.io:2053/ipfs/")){
+      jsonUsrl = jsonUsrl;
+      console.log("jsonUsrl", jsonUsrl);
+    } if (jsonUsrl.startsWith("https://ipfs.moralis.io:2053/ipfs/")) {
 
 
-       
-      jsonUsrl=jsonUsrl
-    
 
-    }else{
-      jsonUsrl =women_drink
+      jsonUsrl = jsonUsrl
+
+
+    } else {
+      jsonUsrl = women_drink
     }
 
     setNFTurl(jsonUsrl)
-   
+
 
     let finalUrl;
     // = await axios.get(jsonUsrl);
@@ -285,7 +286,7 @@ export default function Sellmain() {
             console.log("curreny_time", curreny_time)
             console.log("value_price", value_price)
 
-
+            let selecthere = selectoption.current.value;
 
 
             let getListingPrice = await getodernumberhere.methods.getListingPrice().call();
@@ -342,7 +343,7 @@ export default function Sellmain() {
             // toast.success("Success")
             setIsSpinner(false)
             toast.success("Transion Compelete")
-                history.push("/My_Collection");
+            history.push("/My_Collection");
 
 
 
@@ -386,7 +387,7 @@ export default function Sellmain() {
         </div>
       </section>
       <section className="mt-4 item-details-area">
-      <div className="overlay"></div>
+        <div className="overlay"></div>
 
         <div className="container">
           {
@@ -425,6 +426,30 @@ export default function Sellmain() {
                                 ref={inputdata_price}
                               />
                             </div>
+                          </div>
+                          <div className="col-12 item px-lg-2">
+                            <div className="card ">
+                              <select
+                                name="days"
+                                class="dropdown__filter"
+                                id=""
+                                style={{ backgroundColor: "rgba(0, 0, 0, .12)" }}
+                              ref={selectoption}
+                              >
+                                <option value="" selected disabled hidden>
+                                  Select Days
+                                </option>
+                                <option value="ULE" class="dropdown__select">
+                                  ULE
+                                </option>
+                                <option value="WHE">WHE</option>
+                                <option value="CST">CST</option>
+                       
+
+                              </select>
+                            </div>
+
+
                           </div>
                         </div>
 

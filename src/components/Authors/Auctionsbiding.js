@@ -48,6 +48,8 @@ export default function Auctionsbiding() {
   const inputdata_price = useRef();
 
   const selectoption = useRef();
+  const selectCategories= useRef();
+
 
   const [addrtype, setAddrType] = useState("Home");
 
@@ -165,6 +167,7 @@ export default function Auctionsbiding() {
         let address = "0x4113ccD05D440f9580d55B2B34C92d6cC82eAB3c";
         let value_price = inputdata_price.current.value;
         let selecthere = selectoption.current.value;
+        let Categories_value=selectCategories.current.value;
 
 
         console.log("ownaddress", value_price);
@@ -376,7 +379,29 @@ export default function Auctionsbiding() {
 
                           </select>
                         </div>
+                        <div className="card  mt-4">
+                          <select
+                            name="days"
+                            class="dropdown__filter"
+                            id=""
+                            style={{ backgroundColor: "rgba(0, 0, 0, .12)" }}
+                            ref={selectoption}
+                          >
+                            <option value="" selected disabled hidden>
+                              Select Categories
+                            </option>
+                            <option value="ULE" class="dropdown__select">
 
+                               ULE
+                            </option>
+                            <option value="CST"> CST</option>
+                            <option value="WHE">WHE</option>
+                           
+                            {/* <option value="15"> 15 Munites</option>
+                            <option value="15"> 1 Day</option> */}
+
+                          </select>
+                        </div>
                         <button
                           className="btn my-4 form-control btn-lg"
                           style={{ padding: "25px 25px 35px 25px" }}
