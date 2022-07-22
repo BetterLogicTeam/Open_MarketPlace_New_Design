@@ -66,8 +66,11 @@ ul li {
     border-radius: 10px;
     /* padding: 12px; */
     transition: color 0.4s ease 0s, background-color 0.4s ease 0s;
-    color: rgb(53, 56, 64);
-    /* background-color: rgb(255, 255, 255); */
+    color: rgb(53, 56, 64) !important;
+    background-color: rgb(255, 255, 255);
+    /* color: #14141F !important; */
+    font-weight: 600 !important;
+    font-size: 16px !important;
 }
 .elyzfO {
     /* color: rgb(32, 129, 226); */
@@ -87,5 +90,5 @@ ul li {
 .jnCfKq {
     font-weight: 600;
     font-size: 16px;
-    color: #fff !important
+    color: #fff ;
 }

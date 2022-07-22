@@ -1,3 +1,5 @@
+
+
 import React, { Component, useState, useEffect } from "react";
 import { withRouter } from "react-router";
 import { loadWeb3 } from '../Api/api';
@@ -12,6 +14,7 @@ import { useParams, useHistory, Link } from "react-router-dom";
 import { pendingOrder } from "../../reducers/nft.reducer/nft.reducer";
 import axios from "axios";
 import women_drink from '../../Assets/women_drink.jpg'
+import Footer from "../Footer/Footer";
 
 
 
@@ -21,7 +24,7 @@ import women_drink from '../../Assets/women_drink.jpg'
 
 
 
-export default function ExploreFour() {
+export default function CST_NFT() {
   let [orderdata, setorderdata] = useState()
   const [apiData, setapiData] = useState()
 
@@ -37,7 +40,7 @@ export default function ExploreFour() {
   const Fatch_Api_data = async () => {
     try {
 
-      let res = await axios.get("https://openmarket-nft.herokuapp.com/sell_marketplace_history?id=100")
+      let res = await axios.get("https://openmarket-nft.herokuapp.com/marketplace_categorywise_sell_history?category=CST")
       console.log("res", res.data.data);
       res = res.data.data
       console.log("res", res.bidEndTime);
@@ -84,42 +87,38 @@ export default function ExploreFour() {
           </div>
         </div>
         <ul direction="horizontal" class="sc-1xf18x6-0 sc-1j0z9gq-1 sc-15fqy1p-0 haVRLx evhtBl bdgsSq">
-          <li class="sc-1j0z9gq-3 dyEHLA">
-            <Link to="/explore-3">
-
-              <a direction="horizontal" class="sc-1pie21o-0 elyzfO sc-1xf18x6-0 sc-1twd32i-0 sc-1j0z9gq-7 haVRLx kKpYwv cWqKNz sc-15fqy1p-1 eDhZgX" >
-                <span class="sc-1xf18x6-0 sc-1w94ul3-0 sc-1j0z9gq-4 haVRLx  idfsez">Trending</span>
-              </a>
-            </Link>
-          </li>
-          <li class="sc-1j0z9gq-3 dyEHLA">
-            <Link to="/ULE_NFT">
-
-              <a direction="horizontal" class="sc-1pie21o-0 elyzfO sc-1xf18x6-0 sc-1twd32i-0 sc-1j0z9gq-7 haVRLx kKpYwv jbnEyp sc-15fqy1p-1 eDhZgX" >
-                <span class="sc-1xf18x6-0 sc-1w94ul3-0 sc-1j0z9gq-4 haVRLx jnCfKq idfsez">ULE</span>
-              </a>
-            </Link>
-          </li>
-          <li class="sc-1j0z9gq-3 dyEHLA">
-            <Link to="/CST_NFT">
-
-              <a direction="horizontal" class="sc-1pie21o-0 elyzfO sc-1xf18x6-0 sc-1twd32i-0 sc-1j0z9gq-7 haVRLx kKpYwv jbnEyp sc-15fqy1p-1 eDhZgX" >
-                <span class="sc-1xf18x6-0 sc-1w94ul3-0 sc-1j0z9gq-4 haVRLx jnCfKq idfsez">CST</span>
-              </a>
-            </Link>
-          </li>
-          <li class="sc-1j0z9gq-3 dyEHLA">
-            <Link to="/WHE_NFT">
-
-              <a direction="horizontal" class="sc-1pie21o-0 elyzfO sc-1xf18x6-0 sc-1twd32i-0 sc-1j0z9gq-7 haVRLx kKpYwv jbnEyp sc-15fqy1p-1 eDhZgX" >
-                <span class="sc-1xf18x6-0 sc-1w94ul3-0 sc-1j0z9gq-4 haVRLx jnCfKq idfsez">WHE</span>
-              </a>
-            </Link>
-          </li>
-
-        </ul>
+        <li class="sc-1j0z9gq-3 dyEHLA">
+        <Link to="/explore-3">
+          <a direction="horizontal" class="sc-1pie21o-0 elyzfO sc-1xf18x6-0 sc-1twd32i-0 sc-1j0z9gq-7 haVRLx kKpYwv  sc-15fqy1p-1 eDhZgX" >
+            <span class="sc-1xf18x6-0 sc-1w94ul3-0 sc-1j0z9gq-4 haVRLx jnCfKq idfsez">Trending</span>
+          </a>
+          </Link>
+        </li>
+        <li class="sc-1j0z9gq-3 dyEHLA">
+        <Link to="/ULE_NFT">
+          <a direction="horizontal" class="sc-1pie21o-0 elyzfO sc-1xf18x6-0 sc-1twd32i-0 sc-1j0z9gq-7 haVRLx kKpYwv jbnEyp sc-15fqy1p-1 eDhZgX" >
+            <span class="sc-1xf18x6-0 sc-1w94ul3-0 sc-1j0z9gq-4 haVRLx jnCfKq idfsez">ULE</span>
+          </a>
+          </Link>
+        </li>
+        <li class="sc-1j0z9gq-3 dyEHLA">
+        <Link to="/CST_NFT">
+          <a direction="horizontal" class="sc-1pie21o-0 elyzfO sc-1xf18x6-0 sc-1twd32i-0 sc-1j0z9gq-7 haVRLx kKpYwv jbnEyp cWqKNz sc-15fqy1p-1 eDhZgX" >
+            <span class="sc-1xf18x6-0 sc-1w94ul3-0 sc-1j0z9gq-4 haVRLx  idfsez">CST</span>
+          </a>
+          </Link>
+        </li>
+        <li class="sc-1j0z9gq-3 dyEHLA">
+        <Link to="/WHE_NFT">
+          <a direction="horizontal" class="sc-1pie21o-0 elyzfO sc-1xf18x6-0 sc-1twd32i-0 sc-1j0z9gq-7 haVRLx kKpYwv jbnEyp sc-15fqy1p-1 eDhZgX" >
+            <span class="sc-1xf18x6-0 sc-1w94ul3-0 sc-1j0z9gq-4 haVRLx jnCfKq idfsez">WHE</span>
+          </a>
+          </Link>
+        </li>
+   
+      </ul>
       </section>
-
+      
 
       <div class="tf-section sc-explore-1">
         <div class="container">
@@ -182,11 +181,13 @@ export default function ExploreFour() {
           </div>
         </div>
       </div>
+      <Footer/>
 
     </>
 
   );
 
 }
+
 
 

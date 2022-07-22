@@ -73,7 +73,7 @@ export default function AuctionModal() {
 
 
     let res = await axios.get(
-      `https://whenftapi.herokuapp.com/OnAuction_marketplace_history?id=100`
+      `https://openmarket-nft.herokuapp.com/OnAuction_marketplace_history?id=100`
     );
 
     let response_here = res.data.data[id]
@@ -244,7 +244,7 @@ export default function AuctionModal() {
           from: acc,
         })
 
-        let postapiPushdata = await axios.post(' https://openmarket-nft.herokuapp.com/update_auction_status', {
+        let postapiPushdata = await axios.post('https://openmarket-nft.herokuapp.com/update_auction_status', {
 
           "tokenid": Token_Id,
 

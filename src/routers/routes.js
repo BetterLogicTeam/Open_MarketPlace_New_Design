@@ -43,6 +43,12 @@ import { CreateNFT } from "../components/Utils/Contract";
 import Creater_Nft from "../components/Creater_Details/Creater_Nft";
 import Sale_NFT from "../components/Creater_Details/Sale_NFT";
 import Auction_NFT from "../components/Creater_Details/Auction_NFT";
+import ULE_NFT from "../components/Explore/ULE_NFT";
+import CST_NFT from "../components/Explore/CST_NFT";
+import WHE_NFT from "../components/Explore/WHE_NFT";
+import Auction_CST from "../components/Auctions/Auction_CST";
+import Auction_ULE from "../components/Auctions/Auction_ULE";
+import Auction_WHE from "../components/Auctions/Auction_WHE";
 
 
 
@@ -98,6 +104,15 @@ class MyRouts extends React.Component {
 
             <Route exact path='/purchase/:id' component={Purchase} />
             <Route exact path='/Collection_Purchase/:id' component={Collection_Purchase} />
+            <Route exact path="/ULE_NFT" component={ULE_NFT} />
+            <Route exact path="/CST_NFT" component={CST_NFT} />
+            <Route exact path="/WHE_NFT" component={WHE_NFT} />
+            <Route exact path="/Auction_CST" component={Auction_CST} />
+            <Route exact path="/Auction_ULE" component={Auction_ULE} />
+            <Route exact path="/Auction_WHE" component={Auction_WHE} />
+
+
+
 
             <Route exact path="/explore-1" component={ExploreOne} />
             <Route exact path="/explore-2" component={ExploreTwo} />

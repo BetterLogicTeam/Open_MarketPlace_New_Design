@@ -83,7 +83,7 @@ export default function Purchase() {
 
     try {
 
-      let res = await axios.get("https://whenftapi.herokuapp.com/sell_marketplace_history?id=100")
+      let res = await axios.get("https://openmarket-nft.herokuapp.com/sell_marketplace_history?id=100")
       console.log("id", id);
       console.log("res", res.data.data[id]);
       res = res.data.data[id]

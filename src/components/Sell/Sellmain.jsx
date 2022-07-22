@@ -324,7 +324,7 @@ export default function Sellmain() {
 
 
             price = web3.utils.fromWei(price)
-            let postapiPushdata = await axios.post('https://whenftapi.herokuapp.com/open_marketplace', {
+            let postapiPushdata = await axios.post('https://openmarket-nft.herokuapp.com/open_marketplace', {
               "useraddress": acc,
               "itemId": itemId,
               "nftContract": nftContract,
@@ -332,18 +332,21 @@ export default function Sellmain() {
               "owner": owner,
               "price": price,
               "sold": sold,
-              "isOnAuction": isOnAuction,
+              "isOnAuction": 0,
               "bidEndTime": bidEndTime,
               "name": NftName,
               "url": NFTurl,
-              "txn": hash
+              "txn": hash,
+              "category":selecthere
+
             })
 
             console.log("postapiPushdata", postapiPushdata);
             // toast.success("Success")
             setIsSpinner(false)
             toast.success("Transion Compelete")
-            history.push("/My_Collection");
+            history.push("/explore-3");
+            window.location.reload();
 
 
 
@@ -437,7 +440,8 @@ export default function Sellmain() {
                               ref={selectoption}
                               >
                                 <option value="" selected disabled hidden>
-                                  Select Days
+                                Select Categories
+
                                 </option>
                                 <option value="ULE" class="dropdown__select">
                                   ULE

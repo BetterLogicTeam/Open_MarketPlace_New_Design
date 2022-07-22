@@ -17,7 +17,7 @@ import Footer from '../Footer/Footer';
 
 
 
-export default function AuctionsTwo() {
+export default function Auction_ULE() {
   let myHistory = useHistory();
 
 
@@ -31,7 +31,7 @@ export default function AuctionsTwo() {
 
   const auction = async () => {
     
-    let res = await axios.get(`https://openmarket-nft.herokuapp.com/OnAuction_marketplace_history?id=100`);
+    let res = await axios.get(`https://openmarket-nft.herokuapp.com/marketplace_categorywise_Auction_history?category=ULE`);
     console.log("ressssssss", res.data.data);
     res=res.data.data;
     
@@ -67,16 +67,16 @@ export default function AuctionsTwo() {
           <li class="sc-1j0z9gq-3 dyEHLA">
             <Link to="/auctions">
 
-              <a direction="horizontal" class="sc-1pie21o-0 elyzfO sc-1xf18x6-0 sc-1twd32i-0 sc-1j0z9gq-7 haVRLx kKpYwv cWqKNz sc-15fqy1p-1 eDhZgX" >
-                <span class="sc-1xf18x6-0 sc-1w94ul3-0 sc-1j0z9gq-4 haVRLx  idfsez">Trending</span>
+              <a direction="horizontal" class="sc-1pie21o-0 elyzfO sc-1xf18x6-0 sc-1twd32i-0 sc-1j0z9gq-7 haVRLx kKpYwv  sc-15fqy1p-1 eDhZgX" >
+                <span class="sc-1xf18x6-0 sc-1w94ul3-0 sc-1j0z9gq-4 haVRLx  jnCfKq idfsez">Trending</span>
               </a>
             </Link>
           </li>
           <li class="sc-1j0z9gq-3 dyEHLA">
             <Link to="/Auction_ULE">
 
-              <a direction="horizontal" class="sc-1pie21o-0 elyzfO sc-1xf18x6-0 sc-1twd32i-0 sc-1j0z9gq-7 haVRLx kKpYwv jbnEyp sc-15fqy1p-1 eDhZgX" >
-                <span class="sc-1xf18x6-0 sc-1w94ul3-0 sc-1j0z9gq-4 haVRLx jnCfKq idfsez">ULE</span>
+              <a direction="horizontal" class="sc-1pie21o-0 elyzfO sc-1xf18x6-0 sc-1twd32i-0 sc-1j0z9gq-7 haVRLx cWqKNz kKpYwv jbnEyp sc-15fqy1p-1 eDhZgX" >
+                <span class="sc-1xf18x6-0 sc-1w94ul3-0 sc-1j0z9gq-4 haVRLx  idfsez">ULE</span>
               </a>
             </Link>
           </li>
@@ -165,8 +165,9 @@ export default function AuctionsTwo() {
         </div>
       </div>
       
+      <Footer/>
 
-{/* <Footer/> */}
+
     </div>
   )
 }

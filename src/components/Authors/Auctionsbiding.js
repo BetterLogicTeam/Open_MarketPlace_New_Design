@@ -168,9 +168,9 @@ export default function Auctionsbiding() {
         let value_price = inputdata_price.current.value;
         let selecthere = selectoption.current.value;
         let Categories_value=selectCategories.current.value;
+        
+        console.log("ownaddress",value_price,"selecthere",selecthere,"Categories_value",Categories_value);
 
-
-        console.log("ownaddress", value_price);
         if (value_price == " ") {
           toast.error("Please enter the value")
           setIsSpinner(false)
@@ -193,7 +193,7 @@ export default function Auctionsbiding() {
 
             value_price = web3.utils.toWei(value_price);
             let curreny_time = Math.floor(new Date().getTime() / 1000.0);
-            let current_time_and_days = 86400 * selecthere;
+            let current_time_and_days = 60 * selecthere;
             current_time_and_days = current_time_and_days + curreny_time;
 
             // console.log("selecthere", current_time_and_days);
@@ -236,7 +236,7 @@ export default function Auctionsbiding() {
             let tokenId = MarketItemId.tokenId;
 
             price = web3.utils.fromWei(price)
-            let postapiPushdata = await axios.post('https://whenftapi.herokuapp.com/open_marketplace', {
+            let postapiPushdata = await axios.post('https://openmarket-nft.herokuapp.com/open_marketplace', {
               "useraddress": acc,
               "itemId": itemId,
               "nftContract": nftContract,
@@ -244,16 +244,19 @@ export default function Auctionsbiding() {
               "owner": owner,
               "price": price,
               "sold": sold,
-              "isOnAuction": isOnAuction,
+              "isOnAuction": 1,
               "bidEndTime": bidEndTime,
               "name": NftName,
               "url": imgul,
-              "txn": hash
+              "txn": hash,
+              "category":Categories_value
+
             })
 
-            // console.log("postapiPushdata", postapiPushdata);
+            console.log("postapiPushdata", postapiPushdata);
             toast.success("Transion Compelete")
             history.push("/auctions");
+            window.location.reload();
 
             setIsSpinner(false)
 
@@ -375,7 +378,7 @@ export default function Auctionsbiding() {
                             <option value="5"> 5 Munites</option>
                             <option value="10"> 10 Munites</option>
                             <option value="15"> 15 Munites</option>
-                            <option value="15"> 1 Day</option>
+                            <option value="1440"> 1 Day</option>
 
                           </select>
                         </div>
@@ -385,7 +388,7 @@ export default function Auctionsbiding() {
                             class="dropdown__filter"
                             id=""
                             style={{ backgroundColor: "rgba(0, 0, 0, .12)" }}
-                            ref={selectoption}
+                            ref={selectCategories}
                           >
                             <option value="" selected disabled hidden>
                               Select Categories

@@ -14,7 +14,7 @@ export default function Collections() {
   const Fatch_Api_data = async () => {
     try {
 
-      let res = await axios.get("https://whenftapi.herokuapp.com/sell_marketplace_history?id=100")
+      let res = await axios.get("https://openmarket-nft.herokuapp.com/sell_marketplace_history?id=100")
       console.log("res", res.data.data);
       res = res.data.data
       console.log("Data", res);

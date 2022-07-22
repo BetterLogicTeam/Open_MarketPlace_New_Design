@@ -89,7 +89,7 @@ const Timer = ({ start }) => {
 
 
     let res = await axios.get(
-      `https://whenftapi.herokuapp.com/OnAuction_marketplace_history?id=100`
+      `https://openmarket-nft.herokuapp.com/OnAuction_marketplace_history?id=100`
     );
 
 
@@ -357,7 +357,7 @@ class AuctionsOne extends Component {
   };
   auction = async () => {
     const res = await axios.get(
-      `https://whenftapi.herokuapp.com/OnAuction_marketplace_history?id=100`
+      `https://openmarket-nft.herokuapp.com/OnAuction_marketplace_history?id=100`
     );
     console.log("liveress", res);
     this.setState({

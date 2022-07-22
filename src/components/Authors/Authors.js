@@ -143,6 +143,7 @@ export default function Authors() {
 
       });
       history.push("/My_Collection");
+      window.location.reload();
 
 
 
